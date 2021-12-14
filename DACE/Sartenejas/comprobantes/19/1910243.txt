@@ -1,0 +1,3 @@
+1910243
+LLA113 seccion: 5 LENGUAJE
+MA1111 seccion: 6 MATEMATICAS I (version solo evaluaciones)

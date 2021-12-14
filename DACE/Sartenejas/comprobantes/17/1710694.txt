@@ -1,0 +1,3 @@
+1710694
+LLA113 seccion: 2 LENGUAJE
+MA1111 seccion: 1 MATEMATICAS I (version con clases)

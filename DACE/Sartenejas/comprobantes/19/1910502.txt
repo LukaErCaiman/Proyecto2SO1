@@ -1,0 +1,4 @@
+1910502
+DA1111 seccion: 1 GEOM. DESC. DIB. I
+LLA113 seccion: 5 LENGUAJE
+MA1111 seccion: 7 MATEMATICAS I (version solo evaluaciones)

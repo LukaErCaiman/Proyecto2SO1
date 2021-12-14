@@ -1,0 +1,4 @@
+1610617
+ID1112 seccion: 4 INGLES
+LLA112 seccion: 3 LENGUAJE
+MA1111 seccion: 1 MATEMATICAS I (version con clases)

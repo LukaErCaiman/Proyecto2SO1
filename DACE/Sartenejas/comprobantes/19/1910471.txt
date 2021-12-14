@@ -1,0 +1,4 @@
+1910471
+ID1113 seccion: 1 INGLES
+LLA113 seccion: 4 LENGUAJE
+MA1111 seccion: 2 MATEMATICAS I (version con clases)

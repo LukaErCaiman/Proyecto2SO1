@@ -1,0 +1,4 @@
+1910324
+CCG333 seccion: 1 OPTIMIZACION DEL TIEMPO LIBRE
+DA1111 seccion: 1 GEOM. DESC. DIB. I
+MA1111 seccion: 1 MATEMATICAS I (version con clases)

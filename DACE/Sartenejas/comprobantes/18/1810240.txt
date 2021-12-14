@@ -1,0 +1,4 @@
+1810240
+ID1113 seccion: 1 INGLES
+LLA113 seccion: 4 LENGUAJE
+MA1111 seccion: 5 MATEMATICAS I (version solo evaluaciones)

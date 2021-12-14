@@ -1,0 +1,4 @@
+1810578
+CE1112 seccion: 2 FUNDAMENTOS DE ADMINISTRACION I
+ID1122 seccion: 2 INGLES II
+MA1111 seccion: 7 MATEMATICAS I (version solo evaluaciones)

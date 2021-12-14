@@ -1,0 +1,5 @@
+1910536
+ID2512 seccion: 1 ITALIANO V
+LLA113 seccion: 5 LENGUAJE
+MA1111 seccion: 2 MATEMATICAS I (version con clases)
+QM1121 seccion: 1 QUIMICA GENERAL I

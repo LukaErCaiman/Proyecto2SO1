@@ -1,0 +1,4 @@
+1810682
+CSX312 seccion: 1 INTRODUCCION A DER
+DA1111 seccion: 4 GEOM. DESC. DIB. I
+MA1111 seccion: 6 MATEMATICAS I (version solo evaluaciones)

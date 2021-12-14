@@ -1,0 +1,3 @@
+1910677
+LLA112 seccion: 7 LENGUAJE
+MA1111 seccion: 7 MATEMATICAS I (version solo evaluaciones)

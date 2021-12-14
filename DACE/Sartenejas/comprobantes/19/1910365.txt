@@ -1,0 +1,3 @@
+1910365
+DA1111 seccion: 2 GEOM. DESC. DIB. I
+MA1111 seccion: 2 MATEMATICAS I (version con clases)

@@ -1,0 +1,4 @@
+1900108
+FC-1122 seccion: 1 MATEMATICA I
+FC-1221 seccion: 1 INGLES I
+FC-1505 seccion: 1 LENGUAJE I

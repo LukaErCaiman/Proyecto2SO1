@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 #include "Variables.h"
 
@@ -15,14 +16,18 @@ int main(int argc, char* argv[])
 
 void Opciones(int argc, char* argv[], Entradas* input)
 {
+    strcpy(input->pacienteCero, argv[1]);
     char inputCorrecto = 1;
     if (argc > 2)
     {
         int i;
         for(i = 0; i < argc; i = i+2)
         {
-            /*if(strcmp(argv[i], "--i") || strcmp(argv[i], "--instancias"))
-            {}
+            if(strcmp(argv[i], "--i") || strcmp(argv[i], "--instancias"))
+            {
+                input->instancias = atoi(argv[i+1]);
+            }
+            /*
             if(strcmp(argv[i], "--d") || strcmp(argv[i], "--directorio"))
             {}
             */

@@ -1,0 +1,4 @@
+1910009
+ID1511 seccion: 1 ITALIANO I
+LLC338 seccion: 1 TEXTOS DE HOMOR:PARODIA,HIST. Y CULTURA
+MA1111 seccion: 5 MATEMATICAS I (version solo evaluaciones)
