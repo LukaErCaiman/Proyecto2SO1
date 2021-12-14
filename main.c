@@ -5,6 +5,7 @@
 #include "Variables.h"
 
 void Opciones(int argc, char* argv[], Entradas* input);
+void ImprimirError();
 
 int main(int argc, char* argv[])
 {
@@ -17,7 +18,6 @@ int main(int argc, char* argv[])
 void Opciones(int argc, char* argv[], Entradas* input)
 {
     strcpy(input->pacienteCero, argv[1]);
-    char inputCorrecto = 1;
     if (argc > 2)
     {
         int i;
@@ -25,18 +25,29 @@ void Opciones(int argc, char* argv[], Entradas* input)
         {
             if(strcmp(argv[i], "--i") || strcmp(argv[i], "--instancias"))
             {
+                if((i+1) > argc)
+                {
+                    ImprimirError();
+                }
                 input->instancias = atoi(argv[i+1]);
             }
-            /*
+            
             if(strcmp(argv[i], "--d") || strcmp(argv[i], "--directorio"))
-            {}
-            */
+            {
+                if((i+1) > argc)
+                {
+                    ImprimirError();
+                }
+                strcpy(input->directorio, argv[i+1]);
+            }            
         }
     }
+}
 
-    if (inputCorrecto == 1)
-    {
-        printf("Sintaxis de ejecucion correcta:\n");
-        printf("./rastreo <carnet> [-i | --instancias <n>] [-d | --directorio <dir>]\n");
-    }
+void ImprimirError()
+{
+    printf("Sintaxis de ejecucion correcta:\n");
+    printf("./rastreo <carnet> [-i | --instancias <n>] [-d | --directorio <dir>]\n");
+
+    exit();
 }

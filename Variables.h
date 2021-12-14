@@ -3,8 +3,9 @@
 
 typedef struct Variables
 {
-    int pacienteCero, instancias;
+    int instancias;
     char* directorio;
+    char* pacienteCero;
 } Entradas;
 
 #endif
