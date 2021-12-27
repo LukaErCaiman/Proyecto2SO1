@@ -47,6 +47,7 @@ void Opciones(int argc, char* argv[], Entradas* input)
                 {
                     ImprimirError();
                 }
+                VerificarEsNumero(argv[i+1]);
                 input->instancias = atoi(argv[i+1]);
             }
             
