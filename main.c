@@ -59,7 +59,7 @@ void Opciones(int argc, char* argv[], Entradas* input)
                     ImprimirError();
                 }
                 strcpy(input->directorio, argv[i+1]);
-            }            
+            }
         }
 }
 
