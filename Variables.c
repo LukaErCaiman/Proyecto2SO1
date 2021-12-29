@@ -4,7 +4,7 @@
 
 
 Persona* CrearLista();
-Persona* CrearPersona(Persona* Lista);
+Persona* CrearPersona(Persona* Lista, int carnet[7], int instancia);
 
 Persona* CrearLista()
 {
@@ -17,7 +17,7 @@ Persona* CrearLista()
 }
 
 
-Persona* CrearPersona(Persona* Lista) 
+Persona* CrearPersona(Persona* Lista, int carnet[7], int instancia) 
 {
     Persona *nuevo = malloc(sizeof(Persona));
 
