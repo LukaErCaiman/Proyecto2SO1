@@ -8,4 +8,15 @@ typedef struct Variables
     char* pacienteCero;
 } Entradas;
 
+typedef struct Persona
+{
+    int instancia;
+    char carnet[7];
+    char* cursos[10];
+    struct Persona head;
+    struct Persona sig;
+    struct Persona ant;
+    
+} Persona;
+
 #endif
