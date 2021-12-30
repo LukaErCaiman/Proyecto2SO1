@@ -19,12 +19,12 @@ typedef struct Entradas
     head, sig- ant - apuntadores de lista a la cabeza de la lista, el elemento siguiente y anterior */
 typedef struct Persona
 {
-    int instancia;
-    char carnet[7];
-    char* cursos[10];
     struct Persona head;
     struct Persona sig;
     struct Persona ant;
+    int instancia;
+    char carnet[7];
+    char* cursos[10];
     
 } Persona;
 
