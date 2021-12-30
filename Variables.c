@@ -21,8 +21,9 @@ Persona* CrearPersona(Persona* Lista, int carnet[7], int instancia)
 {
     Persona *nuevo = malloc(sizeof(Persona));
 
-    //asignando nombre
-
+    //asignando nombre e instancia
+    strcpy(nuevo->carnet, carnet);
+    nuevo->instancia = instancia;
 
     //datos dados, ahora se asignan apuntadores
     if (Lista->head == NULL)
