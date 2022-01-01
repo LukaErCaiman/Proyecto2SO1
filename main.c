@@ -63,14 +63,6 @@ void Opciones(int argc, char* argv[], Entradas* input)
         }
 }
 
-void ImprimirError()
-{
-    printf("Sintaxis de ejecucion correcta:\n");
-    printf("./rastreo <carnet> [-i | --instancias <n>] [-d | --directorio <dir>]\n");
-
-    exit(0);
-}
-
 int VerificarEsNumero(char* argv)
 {
     int x;
@@ -84,4 +76,12 @@ int VerificarEsNumero(char* argv)
     }
 
     return 0;
+}
+
+void ImprimirError()
+{
+    printf("Sintaxis de ejecucion correcta:\n");
+    printf("./rastreo <carnet> [-i | --instancias <n>] [-d | --directorio <dir>]\n");
+
+    exit(0);
 }
