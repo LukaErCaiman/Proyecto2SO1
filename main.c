@@ -5,9 +5,9 @@
 
 #include "Variables.h"
 
-void Opciones(int argc, char* argv[], Entradas* input);
 void ImprimirError();
 
+int Opciones(int argc, char* argv[], Entradas* input);
 int VerificarEsNumero(char* argv);
 
 
@@ -19,48 +19,75 @@ int main(int argc, char* argv[])
     {
         ImprimirError();
     }
-    else
+
+    if (VerificarEsNumero(argv[1]) == 1)
     {
-        if (VerificarEsNumero(argv[1]) == 1)
-        {
-            printf("ERROR: Valor de carnet invalido.\n");
-            ImprimirError();
-        }
-        int carnet = atoi(argv[1]);
-    } 
+        printf("ERROR: Valor de carnet invalido.\n");
+        ImprimirError();
+    }
+    strcpy(comandos.pacienteCero, argv[1]);
+
+    Opciones(argc, argv, &comandos);
+
+    printf("Entradas: Carnet: %s\n", comandos.pacienteCero);
+    printf("Instancias: %d\n", comandos.instancias);
 
     return 0;
 }
 
 
-void Opciones(int argc, char* argv[], Entradas* input)
+int Opciones(int argc, char* argv[], Entradas* input)
 {
-    strcpy(input->pacienteCero, argv[1]);
+    int i;
+    char iRevisada, dRevisada;
+    iRevisada = 1;
+    dRevisada = 1;
 
-        int i;
-        for(i = 0; i < argc; i = i+2)
+    for(i = 2; i < argc; i = i+2)
+    {
+        /* Lee numero de instancias */
+        if(strcmp(argv[i], "-i") == 0 || strcmp(argv[i], "--instancias") == 0)
         {
-            /* Lee numero de instancias */
-            if(strcmp(argv[i], "--i") || strcmp(argv[i], "--instancias"))
+            if((i+1) >= argc)
             {
-                if((i+1) > argc)
-                {
-                    ImprimirError();
-                }
-                VerificarEsNumero(argv[i+1]);
-                input->instancias = atoi(argv[i+1]);
+                ImprimirError();
             }
-            
-            /* Lee direccion del directorio raiz*/
-            if(strcmp(argv[i], "--d") || strcmp(argv[i], "--directorio"))
-            {
-                if((i+1) > argc)
-                {
-                    ImprimirError();
-                }
-                strcpy(input->directorio, argv[i+1]);
-            }
+            VerificarEsNumero(argv[i+1]);
+            input->instancias = atoi(argv[i+1]);
+            iRevisada = 0;
         }
+        
+        /* Lee direccion del directorio raiz */
+        if(strcmp(argv[i], "-d") == 0 || strcmp(argv[i], "--directorio") == 0)
+        {
+            printf("REVISANDO DIRECTORIO");
+            if((i+1) >= argc)
+            {
+                ImprimirError();
+            }
+            strcpy(input->directorio, argv[i+1]);
+            dRevisada = 0;
+        }
+    }
+
+    if (iRevisada == 0 && dRevisada == 0)
+    {
+        return 0;
+    }
+    else
+    {
+        if(iRevisada == 1)
+        {
+            printf("ERROR: Entrada de numero de instancias invalida.\n");
+            ImprimirError();
+        }
+        if(dRevisada == 1)
+        {
+            printf("ERROR: Entrada de directorio invalida.\n");
+            ImprimirError();
+        }
+    }
+    return 1;
 }
 
 int VerificarEsNumero(char* argv)
