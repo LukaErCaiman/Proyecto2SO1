@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 int LeerCarnet(char* directorio);
 int LeerCurso(char* directorio);
@@ -14,7 +16,7 @@ int LeerCarnet(char* directorio)
     FILE* archivo = fopen(directorio, "r");
     if (archivo == NULL)
     {
-        printf("ERROR: directorio de archivo invalido!");
+        printf("ERROR: directorio de archivo invalido!\n");
         exit(1);
     }
 
@@ -23,7 +25,48 @@ int LeerCarnet(char* directorio)
 
     while(fgets(linea, sizeof(linea), archivo))
     {
-        printf("%s", linea);
+        if(primeraLineaLeida == 0)
+        {
+            printf("Carnet: %s", linea);
+            primeraLineaLeida = 1;
+        }
+        else
+        {
+            //CODIGO DE PRUEBA: RECORRIENDO Y ESCANEANDO LINEAS
+            int i;
+            char espacio = 0;
+            char* codigo = malloc(10);
+            char seccion; 
+
+            for(i = 0; i < sizeof(linea); i++)
+            {
+
+                if(linea[i] == ' ')
+                {
+                    if(espacio == 1)
+                    {
+                        seccion = linea[i+1];
+                        printf("Seccion: %c\n", seccion);
+                        break;
+                    }
+                    else
+                    {
+                        espacio = 1;
+                        printf("Codigo: %s\n", codigo);
+                    }
+                }
+                else
+                {
+                    if(espacio == 0)
+                    {
+                        char letra = linea[i];
+                        strcat(codigo,&letra);
+                    }
+                }
+            }
+
+
+        }
     }
 }
 
