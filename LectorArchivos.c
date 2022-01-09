@@ -5,6 +5,8 @@
 #include "listaData.h"
 
 
+extern LMat  *ListaMaterias;
+
 
 int LeerCarnet(char* directorio, LMat *Lista)
 {
@@ -14,6 +16,7 @@ int LeerCarnet(char* directorio, LMat *Lista)
     if (archivo == NULL)
     {
         printf("ERROR: directorio de archivo invalido!\n");
+        return 0;
         exit(1);
     }
 
@@ -85,7 +88,7 @@ int LeerCarnet(char* directorio, LMat *Lista)
             }
 
             strcpy(codiguito,codigo);
-            Lista = agregarLMat(Lista,charAEntero(seccion), codiguito);
+            ListaMaterias = agregarLMat(ListaMaterias,charAEntero(seccion), codiguito);
 
         }
 
@@ -94,7 +97,7 @@ int LeerCarnet(char* directorio, LMat *Lista)
 
     }
 
-   // return 0;
+    return 1;
 }
 
 int LeerCurso(char* directorio,  LMat *Lista)
