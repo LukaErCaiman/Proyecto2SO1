@@ -7,8 +7,7 @@
 #include "LectorArchivos.h"
 
 LMat  *ListaMaterias  = NULL;
-
-
+Entradas comandos;
 
 void ImprimirError();
 
@@ -18,8 +17,7 @@ int VerificarEsNumero(char* argv);
 
 int main(int argc, char* argv[])
 {
-
-    Entradas comandos;
+    comandos.directorio = malloc(64);
 
     if(argc < 2)
     {
@@ -38,6 +36,7 @@ int main(int argc, char* argv[])
 
     printf("Entradas: Carnet: %s\n", comandos.pacienteCero);
     printf("Instancias: %d\n", comandos.instancias);
+    printf("Directorio: %s\n", comandos.directorio);
 
     return 0;
 }
@@ -75,7 +74,6 @@ int Opciones(int argc, char* argv[], Entradas* input)
             {
                 ImprimirError();
             }
-            printf("Hola mundo\n");
             
             strcpy(input->directorio, argv[i+1]);
 
