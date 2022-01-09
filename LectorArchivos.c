@@ -215,7 +215,7 @@ int LeerCurso(char* directorio)
         else
         {
             printf("Carnet: %s", linea);
-            pasarCadena2(ListaEst , linea);
+            //pasarCadena2(ListaEst , linea);
         }
     }
 
