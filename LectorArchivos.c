@@ -65,8 +65,9 @@ int LeerCarnet(char* directorio)
             //codigo y la seccion de las materias que cursa
             codigo = malloc(6);
 
+            int i;
             //iteracion sobre la linea, int i es la cuenta del caracter de la linea
-            for(int i = 0; i < sizeof(linea); i++)
+            for(i = 0; i < sizeof(linea); i++)
             {
                 //si el caracter es un espacio y no se ha llegado al segundo espacio
                 if(linea[i] == ' ')
