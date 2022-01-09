@@ -130,7 +130,6 @@ int BuscaCarnet(char* carnet, char* pathSede, struct dirent* entidad)
     }
 
     closedir(comprobantes);
-    closedir(dirRaizCarnets);
 }
 
 
