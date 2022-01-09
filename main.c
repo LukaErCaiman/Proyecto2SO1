@@ -2,8 +2,13 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
-
 #include "Variables.h"
+#include "listaData.h"
+#include "LectorArchivos.h"
+
+LMat  *ListaMaterias  = NULL;
+
+
 
 void ImprimirError();
 
@@ -13,6 +18,7 @@ int VerificarEsNumero(char* argv);
 
 int main(int argc, char* argv[])
 {
+
     Entradas comandos;
 
     if(argc < 2)
@@ -26,6 +32,7 @@ int main(int argc, char* argv[])
         ImprimirError();
     }
     strcpy(comandos.pacienteCero, argv[1]);
+
 
     Opciones(argc, argv, &comandos);
 
@@ -43,9 +50,11 @@ int Opciones(int argc, char* argv[], Entradas* input)
     iRevisada = 1;
     dRevisada = 1;
 
+
     for(i = 2; i < argc; i = i+2)
     {
         /* Lee numero de instancias */
+
         if(strcmp(argv[i], "-i") == 0 || strcmp(argv[i], "--instancias") == 0)
         {
             if((i+1) >= argc)
@@ -56,19 +65,25 @@ int Opciones(int argc, char* argv[], Entradas* input)
             input->instancias = atoi(argv[i+1]);
             iRevisada = 0;
         }
-        
         /* Lee direccion del directorio raiz */
         if(strcmp(argv[i], "-d") == 0 || strcmp(argv[i], "--directorio") == 0)
-        {
+        {   
+            
+
             printf("REVISANDO DIRECTORIO");
             if((i+1) >= argc)
             {
                 ImprimirError();
             }
+            printf("Hola mundo\n");
+            
             strcpy(input->directorio, argv[i+1]);
+
             dRevisada = 0;
+
         }
     }
+    
 
     if (iRevisada == 0 && dRevisada == 0)
     {

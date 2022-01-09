@@ -2,29 +2,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-#include <time.h>
 #include "listaData.h"
 
-//LEst  *ListaEst  = NULL;
-LMat  *ListaMaterias  = NULL;
 
-char carnetabuscar[100];
 
-int LeerCarnet(char* directorio);
-int LeerCurso(char* directorio);
-//void pasarCadena2(LEst *Lista , char cadena1[]);
-
-int main(int argc, char* argv[])
-{   
-    LeerCarnet(argv[1]);
-    imprimirLMat(ListaMaterias);
-    //LeerCurso(argv[1]);
-    //printf("Aqui deberia imprimir el beta\n");
-    //imprimirEstudiantesMateria(ListaEst);
-    return 0;
-}
-
-int LeerCarnet(char* directorio)
+int LeerCarnet(char* directorio, LMat *Lista)
 {
     FILE* archivo = fopen(directorio, "r");
 
@@ -103,7 +85,7 @@ int LeerCarnet(char* directorio)
             }
 
             strcpy(codiguito,codigo);
-            ListaMaterias = agregarLMat(ListaMaterias,charAEntero(seccion), codiguito);
+            Lista = agregarLMat(Lista,charAEntero(seccion), codiguito);
 
         }
 
@@ -115,7 +97,7 @@ int LeerCarnet(char* directorio)
    // return 0;
 }
 
-int LeerCurso(char* directorio)
+int LeerCurso(char* directorio,  LMat *Lista)
 {
     FILE* archivo = fopen(directorio, "r");
 

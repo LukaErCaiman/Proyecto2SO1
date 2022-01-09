@@ -18,6 +18,7 @@ typedef struct materia{
 }LMat;
 
 
+
 int identificar_LEst (LEst *L);
 
 // /int agregarMateria(LEst *L, char carnet[], char materia[]);
@@ -39,6 +40,7 @@ void imprimir_LEst(LEst *Lista);
 int compararCarnet(LEst *L, char carnet[]);
 
 int charAEntero(char caracter);
+
 
 
 #endif
