@@ -1,13 +1,26 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
+#include <time.h>
+#include "listaData.h"
+
+//LEst  *ListaEst  = NULL;
+LMat  *ListaMaterias  = NULL;
+
+char carnetabuscar[100];
 
 int LeerCarnet(char* directorio);
 int LeerCurso(char* directorio);
+//void pasarCadena2(LEst *Lista , char cadena1[]);
 
 int main(int argc, char* argv[])
-{
-    LeerCurso(argv[1]);
+{   
+    LeerCarnet(argv[1]);
+    imprimirLMat(ListaMaterias);
+    //LeerCurso(argv[1]);
+    //printf("Aqui deberia imprimir el beta\n");
+    //imprimirEstudiantesMateria(ListaEst);
     return 0;
 }
 
@@ -28,6 +41,10 @@ int LeerCarnet(char* directorio)
     /*flag que detecte cuando se leyo la primera linea del archivo
     esta linea contiene el codigo, seccion, nombre, profesor y sede de la materia*/
     char primeraLineaLeida = 0;
+    char espacio;
+    char* codigo = malloc(6);
+    char seccion;
+    char codiguito[6]; 
 
     //bucle que itera todas las lineas del archivo
     while(fgets(linea, sizeof(linea), archivo))
@@ -41,16 +58,15 @@ int LeerCarnet(char* directorio)
         else
         {
             //CODIGO DE PRUEBA: RECORRIENDO Y ESCANEANDO LINEAS
-            int i;
 
             //cuenta ciertos espacios recorridos
-            char espacio = 0;
+            espacio = 0;
+
             //codigo y la seccion de las materias que cursa
-            char* codigo = malloc(16);
-            char seccion; 
+            codigo = malloc(6);
 
             //iteracion sobre la linea, int i es la cuenta del caracter de la linea
-            for(i = 0; i < sizeof(linea); i++)
+            for(int i = 0; i < sizeof(linea); i++)
             {
                 //si el caracter es un espacio y no se ha llegado al segundo espacio
                 if(linea[i] == ' ')
@@ -59,7 +75,7 @@ int LeerCarnet(char* directorio)
                     //aqui se guarda el numero de seccion.
                     if(espacio == 2)
                     {
-                        seccion = linea[i+1];
+                        seccion = linea[i-1];
                         printf("Seccion: %c\n", seccion);
                         break;
                     }
@@ -84,10 +100,18 @@ int LeerCarnet(char* directorio)
                     }
                 }
             }
+
+            strcpy(codiguito,codigo);
+            ListaMaterias = agregarLMat(ListaMaterias,charAEntero(seccion), codiguito);
+
         }
+
+
+
+
     }
 
-    return 0;
+   // return 0;
 }
 
 int LeerCurso(char* directorio)
@@ -158,8 +182,7 @@ int LeerCurso(char* directorio)
                 else
                 {
                     //Lee el codigo de la materia hasta llegar a un espacio
-                    if(espacio == 0)
-                    {
+                    if(espacio == 0){
                         char letra = linea[i];
                         strcat(codigo,&letra);
                     }
@@ -192,8 +215,24 @@ int LeerCurso(char* directorio)
         else
         {
             printf("Carnet: %s", linea);
+            pasarCadena2(ListaEst , linea);
         }
     }
 
     return 0;
 }
+
+/*
+void pasarCadena2(LEst *Lista , char cadena1[]){
+
+    ///printf("La Cadena es: %s",cadena1);
+    if(compararCarnet(Lista, cadena1)){
+        ListaEst = agregarLEst(Lista,1, cadena1);
+        //agregarMateria(ListaEst, cadena1, "sociales");
+
+    }else{
+        //si no es nuevo, no se.. creo que se agrega, no se xd 
+    }
+    //ahora tengo que ver si ya esta en la lista o tengo que agregarlo.. 
+
+} */
