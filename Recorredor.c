@@ -2,11 +2,13 @@
 #include <stdio.h>
 #include <dirent.h>
 #include <string.h>
+#include "listaData.h"
 
 int RecorrerRaiz(char* directorio);
-int BuscaArchivos(char* carnetOCodigo, char modoCoM, char* directorio);
-int BuscaCarnet(char* carnet, char* pathSede, struct dirent* entidad);
-int BuscaMateria(char* codigo, char* pathSede, struct dirent* entidad);
+int VerificarMateria(int seccion, char* codigo, struct dirent* entidad);
+int BuscaArchivos(char* carnetOCodigo, int seccion, char modoCoM, char* directorio, LEst* ListaEst, LMat* ListaMats);
+int BuscaCarnet(char* carnet, char* pathSede, struct dirent* entidad, LEst* ListaEst, LMat* ListaMats);
+int BuscaMateria(char* codigo, char* pathSede, int seccion, struct dirent* entidad, LMat* ListaMats);
 
 
 int RecorrerRaiz(char* directorio)
@@ -53,7 +55,7 @@ int RecorrerRaiz(char* directorio)
 //el parametro modoCoM es para indicar si busca un carnet o una materia
 // - Si su valor es 0, va a buscar un carnet
 // - Si su valor es 1, una materia
-int BuscaArchivos(char* carnetOCodigo, char modoCoM, char* directorio)
+int BuscaArchivos(char* carnetOCodigo, int seccion, char modoCoM, char* directorio, LEst* ListaEst, LMat* ListaMats)
 {
     DIR* raiz = opendir(directorio);
 
@@ -76,12 +78,12 @@ int BuscaArchivos(char* carnetOCodigo, char modoCoM, char* directorio)
             //BUSCA ARCHIVOS DE CARNET
             if(modoCoM == 0)
             {
-                BuscaCarnet(carnetOCodigo, pathSede, entidad);
+                //BuscaCarnet(carnetOCodigo, pathSede, entidad, ListaEst, ListaMats);
             }
             //BUSCA ARCHIVOS DE MATERIAS
             if(modoCoM == 1)
             {
-                BuscaMateria(carnetOCodigo, pathSede, entidad);
+                BuscaMateria(carnetOCodigo, pathSede, seccion, entidad, ListaMats);
             }
             //Se cierra para abrirse después con la otra sede o cerrar la busqueda
             closedir(sede);
@@ -94,7 +96,7 @@ int BuscaArchivos(char* carnetOCodigo, char modoCoM, char* directorio)
     return 0;
 }
 
-int BuscaCarnet(char* carnet, char* pathSede, struct dirent* entidad)
+int BuscaCarnet(char* carnet, char* pathSede, struct dirent* entidad, LEst* ListaEst, LMat* ListaMats)
 {
     DIR* dirRaizCarnets = opendir(strcat(pathSede, "/comprobantes"));
     entidad = readdir(dirRaizCarnets);
@@ -133,7 +135,7 @@ int BuscaCarnet(char* carnet, char* pathSede, struct dirent* entidad)
 }
 
 
-int BuscaMateria(char* codigo, char* pathSede, struct dirent* entidad)
+int BuscaMateria(char* codigo, char* pathSede, int seccion, struct dirent* entidad, LMat* ListaMats)
 {
     DIR* dirRaizCodigos = opendir(strcat(pathSede, "/listas"));
     entidad = readdir(dirRaizCodigos);
@@ -169,9 +171,50 @@ int BuscaMateria(char* codigo, char* pathSede, struct dirent* entidad)
     }
     closedir(materias);
 }
+<<<<<<< HEAD
+=======
+
+int VerificarMateria(int seccion, char* codigo, struct dirent* entidad)
+{
+    char* materiaLeida = malloc(8);
+    int i;
+
+    char espacios = 0;
+    for (i = 0; i < sizeof(entidad->d_name); i++)
+    {
+        if (entidad->d_name[i] == ' ')
+        {
+            espacios++;
+            if(strcmp(codigo,materiaLeida) != 0)
+            {
+                return 1;
+            }
+        }
+        if(espacios == 0)
+        {
+            char letra = entidad->d_name[i];
+            strcat(materiaLeida,&letra);
+        }
+        if(espacios == 2)
+        {
+            int seccionLeida = (int)((entidad->d_name[i+1]) - 48);
+            if(strcmp(codigo,materiaLeida) == 0 && seccion == seccionLeida)
+            {
+                return 0;
+            }
+            else
+            {
+                return 1;
+            }
+        }
+    }
+    return 1;
+}
+
 /*
 int main(int argc, char* argv[])
 {
     BuscaArchivos("TI4523", 1, "./DACE" );
     return 0;
+<<<<<<< HEAD
 }*/

@@ -14,22 +14,24 @@ LFinal  *ListaMateriasCompleja;
 
 
 #include "LectorArchivos.h"
+#include "Recorredor.h"
+
+LMat *ListaMaterias = NULL;
 
 Entradas comandos;
 
 void ImprimirError();
 
-int Opciones(int argc, char* argv[], Entradas* input);
-int VerificarEsNumero(char* argv);
+int Opciones(int argc, char *argv[], Entradas *input);
+int VerificarEsNumero(char *argv);
 void ArmarDireccion(int tipo, char direccion[], char carnet[]);
 
-
-
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
+    // Variable estructura que guarda todas las entradas del usuario
     comandos.directorio = malloc(64);
 
-    if(argc < 2)
+    if (argc < 2)
     {
         ImprimirError();
     }
@@ -39,8 +41,9 @@ int main(int argc, char* argv[])
         printf("ERROR: Valor de carnet invalido.\n");
         ImprimirError();
     }
-    strcpy(comandos.pacienteCero, argv[1]);
 
+    // guarda el paciente cero en la estructura
+    strcpy(comandos.pacienteCero, argv[1]);
 
     Opciones(argc, argv, &comandos);
 
@@ -50,25 +53,36 @@ int main(int argc, char* argv[])
     printf("el paciente es %s\n", comandos.pacienteCero);
 
     int existe = 0;
-
-    char direccion[100]="";
-    strcpy(direccion, strchr(comandos.directorio, '.')+1);
-        printf("El nuevo directorio es %s\n", direccion);
-
+    char direccion[100] = { 0 };
+    strcpy(direccion, strchr(comandos.directorio, '/') + 1);
 
     int sede = 1;
-    do{
+    do
+    {
         ArmarDireccion(sede, direccion, comandos.pacienteCero);
         printf("El nuevo directorio es %s\n", direccion);
         existe = LeerCarnet(direccion, ListaMaterias);
         sede++;
-        if(sede>2) break;
-    }while(existe == 0);
+        if (sede > 2)
+            break;
+    } while (existe == 0);
 
-    if(!existe){
+    if (!existe)
+    {
         printf("No existe el comprobante de este estudiante.\n");
-    }else{
+    }
+    else
+    {
         imprimirLMat(ListaMaterias);
+    }
+
+    LMat* LMatIterada = ListaMaterias;
+    LEst* LEstIterada = malloc(sizeof(LEst*));
+    while(LMatIterada->sig != NULL)
+    {
+
+        BuscaArchivos(LMatIterada->codigo, LMatIterada->seccion, 1, direccion, LEstIterada, LMatIterada);
+        LMatIterada = LMatIterada->sig;
     }
 
 
@@ -80,7 +94,7 @@ int main(int argc, char* argv[])
     //Para ver si esta en sartenejas 
     
 
-    //char *directorio = "DACE/Sartenejas/comprobantes/14/1410445.txt";
+    // char *directorio = "DACE/Sartenejas/comprobantes/14/1410445.txt";
     /*if(LeerCarnet(directorio2, ListaMaterias)){
         printf("La lista de materias es:\n");
     }else{
@@ -104,12 +118,16 @@ int main(int argc, char* argv[])
     //imprimirEstudiantesMateria(ListaMateriasCompleja);
     imprimirLFinal(ListaMateriasCompleja);
 
+    /// ejecutarDirectorio(".");
+
     return 0;
 }
 
-void ArmarDireccion(int tipo, char direccion[], char carnet[]){
+void ArmarDireccion(int tipo, char direccion[], char carnet[])
+{
     char directorio2[100];
     char cohorte[3];
+
     switch(tipo){
         case 1:
             strcat(direccion,"DACE/Sartenejas/comprobantes/");
@@ -119,6 +137,7 @@ void ArmarDireccion(int tipo, char direccion[], char carnet[]){
             break;
         default:
             strcpy(direccion,"DACE/Sartenejas/comprobantes/");
+
     }
     strncpy(cohorte, carnet, 2);
     strncat(direccion, cohorte, 2);
@@ -127,46 +146,42 @@ void ArmarDireccion(int tipo, char direccion[], char carnet[]){
     strcat(direccion, ".txt");
 }
 
-int Opciones(int argc, char* argv[], Entradas* input)
+int Opciones(int argc, char *argv[], Entradas *input)
 {
     int i;
     char iRevisada, dRevisada;
     iRevisada = 1;
     dRevisada = 1;
 
-
-    for(i = 2; i < argc; i = i+2)
+    for (i = 2; i < argc; i = i + 2)
     {
         /* Lee numero de instancias */
 
-        if(strcmp(argv[i], "-i") == 0 || strcmp(argv[i], "--instancias") == 0)
+        if (strcmp(argv[i], "-i") == 0 || strcmp(argv[i], "--instancias") == 0)
         {
-            if((i+1) >= argc)
+            if ((i + 1) >= argc)
             {
                 ImprimirError();
             }
-            VerificarEsNumero(argv[i+1]);
-            input->instancias = atoi(argv[i+1]);
+            VerificarEsNumero(argv[i + 1]);
+            input->instancias = atoi(argv[i + 1]);
             iRevisada = 0;
         }
         /* Lee direccion del directorio raiz */
-        if(strcmp(argv[i], "-d") == 0 || strcmp(argv[i], "--directorio") == 0)
-        {   
-            
+        if (strcmp(argv[i], "-d") == 0 || strcmp(argv[i], "--directorio") == 0)
+        {
 
             printf("REVISANDO DIRECTORIO");
-            if((i+1) >= argc)
+            if ((i + 1) >= argc)
             {
                 ImprimirError();
             }
-            
-            strcpy(input->directorio, argv[i+1]);
+
+            strcpy(input->directorio, argv[i + 1]);
 
             dRevisada = 0;
-
         }
     }
-    
 
     if (iRevisada == 0 && dRevisada == 0)
     {
@@ -174,27 +189,25 @@ int Opciones(int argc, char* argv[], Entradas* input)
     }
     else
     {
-        if(iRevisada == 1)
+        if (iRevisada == 1)
         {
-            printf("ERROR: Entrada de numero de instancias invalida.\n");
-            ImprimirError();
+            input->instancias = 1;
         }
-        if(dRevisada == 1)
+        if (dRevisada == 1)
         {
-            printf("ERROR: Entrada de directorio invalida.\n");
-            ImprimirError();
+            strcpy(input->directorio, ".");
         }
     }
-    return 1;
+    return 0;
 }
 
-int VerificarEsNumero(char* argv)
+int VerificarEsNumero(char *argv)
 {
     int x;
 
-    for( x = 0; x < strlen(argv); x++)
+    for (x = 0; x < strlen(argv); x++)
     {
-        if(argv[x] < '0' || argv[x] > '9')
+        if (argv[x] < '0' || argv[x] > '9')
         {
             return 1;
         }
