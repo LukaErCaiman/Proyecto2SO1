@@ -48,3 +48,4 @@ Persona* CrearPersona(Persona* Lista, int carnet[7], int instancia)
         return Lista;
     }
 }
+

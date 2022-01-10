@@ -169,9 +169,9 @@ int BuscaMateria(char* codigo, char* pathSede, struct dirent* entidad)
     }
     closedir(materias);
 }
-
+/*
 int main(int argc, char* argv[])
 {
     BuscaArchivos("TI4523", 1, "./DACE" );
     return 0;
-}
+}*/

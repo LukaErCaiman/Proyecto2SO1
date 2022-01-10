@@ -5,8 +5,33 @@
 #include "listaData.h"
 
 
-extern LMat  *ListaMaterias;
+extern LMat    *ListaMaterias;
+extern LEst    *ListaEstudiantes;
+extern LFinal  *ListaMateriasCompleja;
 
+
+
+
+void pasarCadena2(LEst *Lista , LFinal *L, char cadena1[]){
+
+    ListaEstudiantes = agregarLEst(ListaEstudiantes,1, cadena1);
+    LFinal* aux;
+    aux = L;
+    while (aux->sig !=NULL){
+        aux =aux->sig;
+    }
+    aux->estudiantes   = agregarLEst(aux->estudiantes,1,  cadena1); 
+
+
+    ///printf("La Cadena es: %s",cadena1);
+    /*if(compararCarnet(Lista, cadena1)){
+
+    }else{
+        //si no es nuevo, no se.. creo que se agrega, no se xd 
+    }*/
+    //ahora tengo que ver si ya esta en la lista o tengo que agregarlo.. 
+
+} 
 
 int LeerCarnet(char* directorio, LMat *Lista)
 {
@@ -185,15 +210,25 @@ int LeerCurso(char* directorio,  LMat *Lista)
                     {
                         char letra = linea[i];
                         strcat(profesor,&letra);
+
                     }
                     //Si llega a un guion, imprime el nombre del profesor
                     if(linea[i] == '-')
                     {
                         printf("Profesor: %s\n", profesor);
+                        break;
                     }
                     
                 }
             }
+            //ListaMateriasCompleja = agregarLFinal(ListaMateriasCompleja, 1);
+            ListaMateriasCompleja = agregarLFinal(ListaMateriasCompleja, seccion, codigo, profesor);
+            ListaMateriasCompleja = agregarLFinal(ListaMateriasCompleja, '2', "aux324", "ernesto guadarrama");
+            ListaMateriasCompleja = agregarLFinal(ListaMateriasCompleja, '3', "ass334", "jose bermudez");
+
+
+
+            //seccion, codigo, profesor, 
             //si se sale del bucle anterior, significa que leyo toda la linea
             //activa un flag para leer las demas lineas
             primeraLineaLeida = 1;
@@ -201,24 +236,10 @@ int LeerCurso(char* directorio,  LMat *Lista)
         else
         {
             printf("Carnet: %s", linea);
-            //pasarCadena2(ListaEst , linea);
+            pasarCadena2(ListaEstudiantes, ListaMateriasCompleja, linea);
         }
     }
 
     return 0;
 }
 
-/*
-void pasarCadena2(LEst *Lista , char cadena1[]){
-
-    ///printf("La Cadena es: %s",cadena1);
-    if(compararCarnet(Lista, cadena1)){
-        ListaEst = agregarLEst(Lista,1, cadena1);
-        //agregarMateria(ListaEst, cadena1, "sociales");
-
-    }else{
-        //si no es nuevo, no se.. creo que se agrega, no se xd 
-    }
-    //ahora tengo que ver si ya esta en la lista o tengo que agregarlo.. 
-
-} */

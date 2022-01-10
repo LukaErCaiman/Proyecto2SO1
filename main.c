@@ -9,6 +9,9 @@
 #include "readdir.h"
 
 LMat  *ListaMaterias  = NULL;
+LEst  *ListaEstudiantes = NULL;
+LFinal  *ListaMateriasCompleja;
+
 
 #include "LectorArchivos.h"
 
@@ -49,7 +52,9 @@ int main(int argc, char* argv[])
     int existe = 0;
 
     char direccion[100]="";
-    strcpy(direccion, strchr(comandos.directorio, '/')+1);
+    strcpy(direccion, strchr(comandos.directorio, '.')+1);
+        printf("El nuevo directorio es %s\n", direccion);
+
 
     int sede = 1;
     do{
@@ -66,6 +71,10 @@ int main(int argc, char* argv[])
         imprimirLMat(ListaMaterias);
     }
 
+
+
+
+    LeerCurso("CCG333 seccion 1.txt",ListaMaterias);
 
 
     //Para ver si esta en sartenejas 
@@ -89,8 +98,11 @@ int main(int argc, char* argv[])
 
    /// ejecutarDirectorio(".");
 
+    printf("Luego de todo deberia imprimir la lista de estudiantes\n");
+    imprimir_LEst(ListaEstudiantes);
 
-
+    //imprimirEstudiantesMateria(ListaMateriasCompleja);
+    imprimirLFinal(ListaMateriasCompleja);
 
     return 0;
 }
@@ -100,13 +112,13 @@ void ArmarDireccion(int tipo, char direccion[], char carnet[]){
     char cohorte[3];
     switch(tipo){
         case 1:
-            strcat(direccion,"/Sartenejas/comprobantes/");
+            strcat(direccion,"DACE/Sartenejas/comprobantes/");
             break;
         case 2:
-            strcpy(direccion,"/Litoral/comprobantes/");
+            strcpy(direccion,"DACE/Litoral/comprobantes/");
             break;
         default:
-            strcpy(direccion,"/Sartenejas/comprobantes/");
+            strcpy(direccion,"DACE/Sartenejas/comprobantes/");
     }
     strncpy(cohorte, carnet, 2);
     strncat(direccion, cohorte, 2);

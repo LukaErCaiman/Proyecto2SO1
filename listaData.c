@@ -17,13 +17,41 @@ typedef struct materia{
     char sede[12];
     int seccion;
     int tipo;
-
     int identificador;
     char nombre[100];
     char codigo[6];
     struct materia *sig;
 }LMat;
 
+
+
+//lista compleja de materias 
+
+typedef struct nodo_estudiante{
+    char carnet[100];
+    struct estudiante *estudiantes;
+}LEst2;
+
+typedef struct materia_compleja{
+	char profesor[30];
+    int sede;
+    int seccion;
+    int instancia;
+    int identificador;
+    char nombre[100];
+    char codigo[6];
+    struct materia_compleja *sig;
+    struct nodo *estudiantes;
+}LFinal;
+
+LFinal  *ListaMateriasCompleja  = NULL;
+
+
+////////////////
+int charAEntero(char caracter){
+    int entero = caracter - '0';
+    return entero;  
+}
 
 int identificar_LEst (LEst *L){
 	int i=0;
@@ -40,10 +68,6 @@ int identificar_LEst (LEst *L){
 	return i;
 }
 
-int charAEntero(char caracter){
-	int entero = caracter - '0';
-	return entero;  
-}
 
 /*typedef struct materia{
     char profesor[30];
@@ -87,6 +111,47 @@ LMat *agregarLMat(LMat *Lista, char codigo[]){
 	return Lista;
 
 }*/
+
+
+LFinal *agregarLFinal(LFinal *Lista, char seccion, char codigo[], char profesor[]){
+	LFinal *nuevoLFinal, *aux;
+	nuevoLFinal               = (LFinal*) malloc (sizeof (LFinal));
+	//nuevoLEst->nombre        = nombre;
+	nuevoLFinal->sig           = NULL;
+
+	nuevoLFinal->seccion = charAEntero(seccion);
+	strcpy(nuevoLFinal->profesor , profesor);
+	strcpy(nuevoLFinal->codigo , codigo);
+
+	//nuevoLFinal->seccion          = seccion;
+	/*for(int p = 0; p<11 ; p++){
+		nuevoLFinal->codigo[p]=codigo[p];
+	}*/
+	//strcpy(nuevoLMat->codigo,codigo);
+
+
+	if (Lista==NULL){
+
+		Lista=nuevoLFinal;
+
+	}else{
+
+		aux=Lista;
+
+		while (aux->sig !=NULL){
+
+			aux = aux->sig;
+
+		}
+
+		aux->sig=nuevoLFinal;
+
+	}
+	//identificar_LEst(Lista);
+
+	return Lista;
+
+}
 
 
 
@@ -235,6 +300,27 @@ void imprimirLMat(LMat *Lista){
 	}
 }
 
+void imprimirLFinal(LFinal *Lista){
+	LFinal* aux;
+	LEst* aux2;
+
+	aux = Lista;
+	printf("La lista es la siguiente\n");
+	while (aux !=NULL){
+	//printf("%s\n", aux->nombre);
+	printf("profesor:%s \n", aux->profesor);
+	printf("codigo:%s \n", aux->codigo);
+	printf("seccion:%d \n", aux->seccion);
+	aux2 = aux->estudiantes;
+	while(aux2 != NULL){
+		printf("estudiante: %s\n",aux2->carnet);
+		aux2=aux2->sig;
+	}
+
+	aux =aux->sig;
+	}
+}
+
 
 void imprimir_LEst(LEst *Lista){
 	LEst* aux;
@@ -254,11 +340,10 @@ void imprimirEstudiantesMateria(LEst *Lista){
 	LEst* aux;
 	aux = Lista;
 	while (aux !=NULL){
-	//printf("%s\n", aux->nombre);
 	printf("ID: %i ", aux->identificador);
 	printf("Carnet: %s", aux->carnet);
 	//printf("Materia: %s", aux->carnet);
-	printf("El valor agregado es %s\n", aux->materias->nombre);
+	//printf("El valor agregado es %s\n", aux->materias->nombre);
 
 	aux =aux->sig;
 	}
@@ -277,16 +362,16 @@ int compararCarnet(LEst *L, char carnet[]){
 	return 1;
 }
 /*
-int agregarMateria(LEst *L, char carnet[], char materia[]){
+int agregarEstudianteLfinal(LFinal *L, int dato){
 	int i=0;
-	while(L!=NULL){
-		if(strcmp(L->carnet,carnet)==0){
-			L->materias = agregarLMat(L->materias, materia); 
+	//while(L!=NULL){
+		//if(strcmp(L->carnet,carnet)==0){
+		L->estudiantes = agregarLEst(L->estudiantes, dato); 
 
-			return 0;
-		}
+			//return 0;
+		//}
 		L=L->sig;
-	}
+	//}
 	return 1;
 }*/
 

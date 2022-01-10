@@ -17,11 +17,32 @@ typedef struct materia{
     struct materia *sig;
 }LMat;
 
+typedef struct nodo_estudiante{
+    char carnet[100];
+    struct estudiante *estudiantes;
+}LEst2;
+
+typedef struct materia_compleja{
+    char profesor[30];
+    int sede;
+    int seccion;
+    int instancia;
+    int identificador;
+    char nombre[100];
+    char codigo[6];
+    struct materia_compleja *sig;
+    struct nodo *estudiantes;
+}LFinal;
+
 
 
 int identificar_LEst (LEst *L);
 
-// /int agregarMateria(LEst *L, char carnet[], char materia[]);
+int agregarEstudianteLFinal(LEst *L, char carnet[], char materia[]);
+
+LFinal *agregarLFinal(LFinal *Lista, int seccion, char codigo[], char profesor[]);
+
+void imprimirLFinal(LFinal *Lista);
 
 LMat *agregarLMat(LMat *Lista, int seccion, char codigo[]);
 
