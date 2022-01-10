@@ -45,7 +45,7 @@ void pasarCadena2(LEst *Lista , LFinal *L, char cadena1[]){
 int LeerCarnet(char* directorio, LMat *Lista)
 {
     FILE* archivo = fopen(directorio, "r");
-
+    
     //Mensaje de error si no hay un archivo con el directorio dado
     if (archivo == NULL)
     {
@@ -96,7 +96,7 @@ int LeerCarnet(char* directorio, LMat *Lista)
                     if(espacio == 2)
                     {
                         seccion = linea[i-1];
-                        printf("Seccion: %c\n", seccion);
+                        //printf("Seccion: %c\n", seccion);
                         break;
                     }
                     //Ya se leyo el codigo de la materia, se imprime y se busca
@@ -106,7 +106,7 @@ int LeerCarnet(char* directorio, LMat *Lista)
                         espacio++;
                         if (espacio == 1)
                         {
-                            printf("Codigo: %s\n", codigo);
+                            //printf("Codigo: %s\n", codigo);
                         }
                     }
                 }
@@ -137,7 +137,10 @@ int LeerCarnet(char* directorio, LMat *Lista)
 int LeerCurso(char* directorio,  LMat *Lista)
 {
     FILE* archivo = fopen(directorio, "r");
-
+    printf("ENTRA AQUI\n");
+    char* temp;
+    scanf("%s\n",temp);
+    
     //Mensaje de error si no hay un archivo con el directorio dado
     if (archivo == NULL)
     {

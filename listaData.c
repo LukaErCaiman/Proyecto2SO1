@@ -113,7 +113,8 @@ LMat *agregarLMat(LMat *Lista, int seccion, char codigo[]){
 	//nuevoLEst->nombre        = nombre;
 	nuevoLMat->sig           = NULL;
 	nuevoLMat->seccion          = seccion;
-	for(int p = 0; p<11 ; p++){
+	int p;
+	for(p = 0; p<11 ; p++){
 		nuevoLMat->codigo[p]=codigo[p];
 	}
 	printf("\n");

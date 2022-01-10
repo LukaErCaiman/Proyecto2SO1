@@ -47,26 +47,21 @@ int main(int argc, char *argv[])
 
     Opciones(argc, argv, &comandos);
 
-    printf("Entradas: Carnet: %s\n", comandos.pacienteCero);
-    printf("Instancias: %d\n", comandos.instancias);
-    printf("Directorio: %s\n", comandos.directorio);
-    printf("el paciente es %s\n", comandos.pacienteCero);
-
     int existe = 0;
     char direccion[100] = "";
-    strcpy(direccion, strchr(comandos.directorio, '/') + 1);
+    strcpy(direccion, comandos.directorio);
 
     int sede = 1;
     do
     {
         ArmarDireccion(sede, direccion, comandos.pacienteCero);
-        printf("El nuevo directorio es %s\n", direccion);
+        //printf("El nuevo directorio es %s\n", direccion);
         existe = LeerCarnet(direccion, ListaMaterias);
         sede++;
         if (sede > 2)
             break;
     } while (existe == 0);
-
+    /*
     if (!existe)
     {
         printf("No existe el comprobante de este estudiante.\n");
@@ -74,26 +69,27 @@ int main(int argc, char *argv[])
     else
     {
         imprimirLMat(ListaMaterias);
-    }
+    } */
 
         
         //imprimirLMat2(ListaMaterias);
 
         //imprimirLMat2(ListaMaterias);
 
-    mandarListaBuscar(ListaMaterias, ListaEstudiantes, direccion);
+    //mandarListaBuscar(ListaMaterias, ListaEstudiantes, direccion);
 
-    /*
+    
     LMat* LMatIterada = ListaMaterias;
     LEst* LEstIterada = malloc(sizeof(LEst*));
+    printf("------DIRECCION: %s\n", comandos.directorio);
     while(LMatIterada!= NULL)
     {
         printf("CODIGOOOO %s\n", LMatIterada->codigo);
         printf(" SECCIONNNN %d\n", LMatIterada->seccion);
 
-        //BuscaArchivos(LMatIterada->codigo, LMatIterada->seccion, 1, direccion, LEstIterada, LMatIterada);
+        BuscaArchivos(LMatIterada->codigo, LMatIterada->seccion, 1, comandos.directorio, LEstIterada, LMatIterada);
         LMatIterada = LMatIterada->sig;
-    }*/
+    }
 
 
 
@@ -142,13 +138,13 @@ void ArmarDireccion(int tipo, char direccion[], char carnet[])
 
     switch(tipo){
         case 1:
-            strcat(direccion,"DACE/Sartenejas/comprobantes/");
+            strcat(direccion,"/Sartenejas/comprobantes/");
             break;
         case 2:
-            strcpy(direccion,"DACE/Litoral/comprobantes/");
+            strcpy(direccion,"/Litoral/comprobantes/");
             break;
         default:
-            strcpy(direccion,"DACE/Sartenejas/comprobantes/");
+            strcpy(direccion,"/Sartenejas/comprobantes/");
 
     }
     strncpy(cohorte, carnet, 2);
@@ -183,7 +179,6 @@ int Opciones(int argc, char *argv[], Entradas *input)
         if (strcmp(argv[i], "-d") == 0 || strcmp(argv[i], "--directorio") == 0)
         {
 
-            printf("REVISANDO DIRECTORIO");
             if ((i + 1) >= argc)
             {
                 ImprimirError();
@@ -207,7 +202,7 @@ int Opciones(int argc, char *argv[], Entradas *input)
         }
         if (dRevisada == 1)
         {
-            strcpy(input->directorio, ".");
+            strcpy(input->directorio, "./DACE");
         }
     }
     return 0;
