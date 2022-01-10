@@ -13,10 +13,9 @@ LEst  *ListaEstudiantes = NULL;
 LFinal  *ListaMateriasCompleja;
 
 
-#include "LectorArchivos.h"
 #include "Recorredor.h"
 
-LMat *ListaMaterias = NULL;
+#include "LectorArchivos.h"
 
 Entradas comandos;
 
@@ -25,6 +24,7 @@ void ImprimirError();
 int Opciones(int argc, char *argv[], Entradas *input);
 int VerificarEsNumero(char *argv);
 void ArmarDireccion(int tipo, char direccion[], char carnet[]);
+
 
 int main(int argc, char *argv[])
 {
@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
     printf("el paciente es %s\n", comandos.pacienteCero);
 
     int existe = 0;
-    char direccion[100] = { 0 };
+    char direccion[100] = "";
     strcpy(direccion, strchr(comandos.directorio, '/') + 1);
 
     int sede = 1;
@@ -76,19 +76,30 @@ int main(int argc, char *argv[])
         imprimirLMat(ListaMaterias);
     }
 
+        
+        //imprimirLMat2(ListaMaterias);
+
+        //imprimirLMat2(ListaMaterias);
+
+    mandarListaBuscar(ListaMaterias, ListaEstudiantes, direccion);
+
+    /*
     LMat* LMatIterada = ListaMaterias;
     LEst* LEstIterada = malloc(sizeof(LEst*));
-    while(LMatIterada->sig != NULL)
+    while(LMatIterada!= NULL)
     {
+        printf("CODIGOOOO %s\n", LMatIterada->codigo);
+        printf(" SECCIONNNN %d\n", LMatIterada->seccion);
 
-        BuscaArchivos(LMatIterada->codigo, LMatIterada->seccion, 1, direccion, LEstIterada, LMatIterada);
+        //BuscaArchivos(LMatIterada->codigo, LMatIterada->seccion, 1, direccion, LEstIterada, LMatIterada);
         LMatIterada = LMatIterada->sig;
-    }
+    }*/
 
 
 
 
-    LeerCurso("CCG333 seccion 1.txt",ListaMaterias);
+
+    //LeerCurso("CCG333 seccion 1.txt",ListaMaterias);
 
 
     //Para ver si esta en sartenejas 
@@ -112,16 +123,17 @@ int main(int argc, char *argv[])
 
    /// ejecutarDirectorio(".");
 
-    printf("Luego de todo deberia imprimir la lista de estudiantes\n");
+   /* printf("Luego de todo deberia imprimir la lista de estudiantes\n");
     imprimir_LEst(ListaEstudiantes);
 
     //imprimirEstudiantesMateria(ListaMateriasCompleja);
     imprimirLFinal(ListaMateriasCompleja);
 
     /// ejecutarDirectorio(".");
-
+*/
     return 0;
 }
+
 
 void ArmarDireccion(int tipo, char direccion[], char carnet[])
 {

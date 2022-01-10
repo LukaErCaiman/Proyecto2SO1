@@ -11,11 +11,13 @@ typedef struct materia{
     char profesor[30];
     char sede[12];
     int seccion;
+    int tipo;
     int identificador;
     char nombre[100];
     char codigo[7];
     struct materia *sig;
 }LMat;
+
 
 typedef struct nodo_estudiante{
     char carnet[100];
@@ -61,6 +63,11 @@ void imprimir_LEst(LEst *Lista);
 int compararCarnet(LEst *L, char carnet[]);
 
 int charAEntero(char caracter);
+
+int BuscaArchivos(char* carnetOCodigo, int seccion, char modoCoM, char* directorio, LEst* ListaEst, LMat* ListaMats);
+
+
+
 
 
 

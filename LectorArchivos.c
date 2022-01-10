@@ -9,7 +9,16 @@ extern LMat    *ListaMaterias;
 extern LEst    *ListaEstudiantes;
 extern LFinal  *ListaMateriasCompleja;
 
-
+void imprimirLMat2(LMat *Lista){
+    LMat* aux;
+    aux = Lista;
+    printf("La lista es la siguiente\n");
+    while (aux !=NULL){
+        printf("codigo:%s \n", aux->codigo);
+        printf("seccion:%d \n", aux->seccion);
+        aux = aux->sig;
+    }
+}
 
 
 void pasarCadena2(LEst *Lista , LFinal *L, char cadena1[]){

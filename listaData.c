@@ -4,6 +4,7 @@
 #include <stdbool.h>
 
 
+
 typedef struct nodo{
     char carnet[100];
     int tipo;
@@ -19,18 +20,13 @@ typedef struct materia{
     int tipo;
     int identificador;
     char nombre[100];
-    char codigo[6];
+    char codigo[7];
     struct materia *sig;
 }LMat;
 
 
 
 //lista compleja de materias 
-
-typedef struct nodo_estudiante{
-    char carnet[100];
-    struct estudiante *estudiantes;
-}LEst2;
 
 typedef struct materia_compleja{
 	char profesor[30];
@@ -67,50 +63,6 @@ int identificar_LEst (LEst *L){
 	}
 	return i;
 }
-
-
-/*typedef struct materia{
-    char profesor[30];
-    char sede[12];
-    int seccion;
-    int identificador;
-    char nombre[100];
-    char codigo[7];
-    struct materia *sig;
-}LMat;*/
-
-/*
-
-LMat *agregarLMat(LMat *Lista, char codigo[]){
-	LMat *nuevoLMat, *aux;
-	nuevoLMat             = (LMat*) malloc (sizeof (LMat));
-	nuevoLMat->sig        = NULL;
-	strcpy(nuevoLMat->codigo,codigo);
-	//nuevoLMat->seccion = seccion;
-
-	if (Lista==NULL){
-
-		Lista=nuevoLMat;
-
-	}else{
-
-		aux=Lista;
-
-		while (aux->sig !=NULL){
-
-			aux = aux->sig;
-
-		}
-
-		aux->sig=nuevoLMat;
-
-	}
-	//identificar_LMat(Lista);
-	printf("%s\n", nuevoLMat->codigo);
-
-	return Lista;
-
-}*/
 
 
 LFinal *agregarLFinal(LFinal *Lista, char seccion, char codigo[], char profesor[]){
@@ -291,14 +243,13 @@ void imprimirLMat(LMat *Lista){
 	aux = Lista;
 	printf("La lista es la siguiente\n");
 	while (aux !=NULL){
-	//printf("%s\n", aux->nombre);
-	printf("codigo:%s \n", aux->codigo);
-	printf("seccion:%d \n", aux->seccion);
-
-
-	aux =aux->sig;
+		printf("codigo:%s \n", aux->codigo);
+		printf("seccion:%d \n", aux->seccion);
+		aux = aux->sig;
 	}
 }
+
+
 
 void imprimirLFinal(LFinal *Lista){
 	LFinal* aux;
@@ -361,19 +312,7 @@ int compararCarnet(LEst *L, char carnet[]){
 	}
 	return 1;
 }
-/*
-int agregarEstudianteLfinal(LFinal *L, int dato){
-	int i=0;
-	//while(L!=NULL){
-		//if(strcmp(L->carnet,carnet)==0){
-		L->estudiantes = agregarLEst(L->estudiantes, dato); 
 
-			//return 0;
-		//}
-		L=L->sig;
-	//}
-	return 1;
-}*/
 
 
 

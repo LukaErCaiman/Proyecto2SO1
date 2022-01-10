@@ -4,12 +4,6 @@
 #include <string.h>
 #include "listaData.h"
 
-int RecorrerRaiz(char* directorio);
-int VerificarMateria(int seccion, char* codigo, struct dirent* entidad);
-int BuscaArchivos(char* carnetOCodigo, int seccion, char modoCoM, char* directorio, LEst* ListaEst, LMat* ListaMats);
-int BuscaCarnet(char* carnet, char* pathSede, struct dirent* entidad, LEst* ListaEst, LMat* ListaMats);
-int BuscaMateria(char* codigo, char* pathSede, int seccion, struct dirent* entidad, LMat* ListaMats);
-
 
 int RecorrerRaiz(char* directorio)
 {
@@ -50,51 +44,6 @@ int RecorrerRaiz(char* directorio)
     }
 }
 
-//NOTA: Quitar parametro "directorio" al conectar con main y reemplasar por
-//comandos->directorio
-//el parametro modoCoM es para indicar si busca un carnet o una materia
-// - Si su valor es 0, va a buscar un carnet
-// - Si su valor es 1, una materia
-int BuscaArchivos(char* carnetOCodigo, int seccion, char modoCoM, char* directorio, LEst* ListaEst, LMat* ListaMats)
-{
-    DIR* raiz = opendir(directorio);
-
-    struct dirent* entidad;
-    entidad = readdir(raiz);
-
-    //ENTRA A CARPETA RAIZ Y BUSCA LAS CARPETAS DE LAS DOS SEDES
-    while (entidad != NULL)
-    {
-        DIR* sede;
-        //Si haya las sedes, verifica cada una de ellas
-        if(strcmp(entidad->d_name, "Sartenejas") == 0 || strcmp(entidad->d_name, "Litoral") == 0)
-        {
-            char pathSede[100] = { 0 };
-            strcpy(pathSede, directorio);
-            strcat(pathSede, "/");
-            strcat(pathSede,entidad->d_name);
-            sede = opendir(pathSede);
-
-            //BUSCA ARCHIVOS DE CARNET
-            if(modoCoM == 0)
-            {
-                //BuscaCarnet(carnetOCodigo, pathSede, entidad, ListaEst, ListaMats);
-            }
-            //BUSCA ARCHIVOS DE MATERIAS
-            if(modoCoM == 1)
-            {
-                BuscaMateria(carnetOCodigo, pathSede, seccion, entidad, ListaMats);
-            }
-            //Se cierra para abrirse después con la otra sede o cerrar la busqueda
-            closedir(sede);
-        } 
-
-        entidad = readdir(raiz);
-    }
-
-    closedir(raiz);
-    return 0;
-}
 
 int BuscaCarnet(char* carnet, char* pathSede, struct dirent* entidad, LEst* ListaEst, LMat* ListaMats)
 {
@@ -171,8 +120,53 @@ int BuscaMateria(char* codigo, char* pathSede, int seccion, struct dirent* entid
     }
     closedir(materias);
 }
-<<<<<<< HEAD
-=======
+
+//NOTA: Quitar parametro "directorio" al conectar con main y reemplasar por
+//comandos->directorio
+//el parametro modoCoM es para indicar si busca un carnet o una materia
+// - Si su valor es 0, va a buscar un carnet
+// - Si su valor es 1, una materia
+int BuscaArchivos(char* carnetOCodigo, int seccion, char modoCoM, char* directorio, LEst* ListaEst, LMat* ListaMats)
+{
+    DIR* raiz = opendir(directorio);
+
+    struct dirent* entidad;
+    entidad = readdir(raiz);
+
+    //ENTRA A CARPETA RAIZ Y BUSCA LAS CARPETAS DE LAS DOS SEDES
+    while (entidad != NULL)
+    {
+        DIR* sede;
+        //Si haya las sedes, verifica cada una de ellas
+        if(strcmp(entidad->d_name, "Sartenejas") == 0 || strcmp(entidad->d_name, "Litoral") == 0)
+        {
+            char pathSede[100] = { 0 };
+            strcpy(pathSede, directorio);
+            strcat(pathSede, "/");
+            strcat(pathSede,entidad->d_name);
+            sede = opendir(pathSede);
+
+            //BUSCA ARCHIVOS DE CARNET
+            if(modoCoM == 0)
+            {
+                //BuscaCarnet(carnetOCodigo, pathSede, entidad, ListaEst, ListaMats);
+            }
+            //BUSCA ARCHIVOS DE MATERIAS
+            if(modoCoM == 1)
+            {
+                BuscaMateria(carnetOCodigo, pathSede, seccion, entidad, ListaMats);
+            }
+            //Se cierra para abrirse después con la otra sede o cerrar la busqueda
+            closedir(sede);
+        } 
+
+        entidad = readdir(raiz);
+    }
+
+    closedir(raiz);
+    return 0;
+}
+
 
 int VerificarMateria(int seccion, char* codigo, struct dirent* entidad)
 {
@@ -210,6 +204,27 @@ int VerificarMateria(int seccion, char* codigo, struct dirent* entidad)
     }
     return 1;
 }
+
+
+void mandarListaBuscar(LMat *Lista, LEst *Lista2, char direccion[]){
+
+	LMat* aux;
+	//LEst* aux2;
+
+	aux = Lista;
+	//aux2 = Lista2;
+
+	printf("La lista es la siguiente\n");
+	while (aux !=NULL){
+		printf("codigo:%s \n", aux->codigo);
+		printf("seccion:%d \n", aux->seccion);
+		//BuscaArchivos(aux->codigo, aux->seccion, 1, direccion, aux2, aux);
+
+		aux =aux->sig;
+	}
+}
+
+
 
 /*
 int main(int argc, char* argv[])
