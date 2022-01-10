@@ -4,6 +4,7 @@
 #include <string.h>
 #include "listaData.h"
 
+int VerificarMateria(int seccion, char* codigo, struct dirent* entidad);
 
 int RecorrerRaiz(char* directorio)
 {
@@ -88,27 +89,27 @@ int BuscaMateria(char* codigo, char* pathSede, int seccion, struct dirent* entid
 {
     DIR* dirRaizCodigos = opendir(strcat(pathSede, "/listas"));
     entidad = readdir(dirRaizCodigos);
-    char dosLetras[3] = { codigo[0], codigo[1], 0};
-    
+    char dosLetras[3] = { codigo[0], codigo [2], 0};
     DIR* materias;
+    char* pathCodigos = malloc(64);
     //BUSCA CARPETA DONDE ESTÁ ESTA MATERIA
     while(entidad != NULL)
     {
+        printf("ENTRA AQUI: %s---------\n", entidad->d_name);
         //SI HAYA CARPETA, ENTRA
         if(strcmp(dosLetras,entidad->d_name) == 0)
         {
-            char* pathCodigos = malloc(64);
-            strcat(pathCodigos,pathSede);
+            strcpy(pathCodigos,pathSede);
             strcat(pathCodigos, "/");
             strcat(pathCodigos, entidad->d_name);
+
             materias = opendir(pathCodigos);
             entidad = readdir(materias);
-
             //BUSCA ARCHIVO DEL CARNET
             while(entidad != NULL)
             {
                 //SI LO ENCUENTRA, ENTRA
-                if(strstr(entidad->d_name, codigo) != NULL)
+                if(VerificarMateria(seccion, codigo, entidad) == 0)
                 {
                     printf("ARCHIVO DE MATERIA HAYADO!\n");
                     break;
@@ -118,7 +119,6 @@ int BuscaMateria(char* codigo, char* pathSede, int seccion, struct dirent* entid
         }
         entidad = readdir(dirRaizCodigos);
     }
-    closedir(materias);
 }
 
 //NOTA: Quitar parametro "directorio" al conectar con main y reemplasar por
@@ -126,7 +126,7 @@ int BuscaMateria(char* codigo, char* pathSede, int seccion, struct dirent* entid
 //el parametro modoCoM es para indicar si busca un carnet o una materia
 // - Si su valor es 0, va a buscar un carnet
 // - Si su valor es 1, una materia
-int BuscaArchivos(char* carnetOCodigo, int seccion, char modoCoM, char* directorio, LEst* ListaEst, LMat* ListaMats)
+int BuscaArchivos(char* carnetOCodigo, int seccion, int modoCoM, char* directorio, LEst* ListaEst, LMat* ListaMats)
 {
     DIR* raiz = opendir(directorio);
 
@@ -170,9 +170,10 @@ int BuscaArchivos(char* carnetOCodigo, int seccion, char modoCoM, char* director
 
 int VerificarMateria(int seccion, char* codigo, struct dirent* entidad)
 {
+    printf("%s\n", codigo);
     char* materiaLeida = malloc(8);
     int i;
-
+    printf("%s\n", entidad->d_name);
     char espacios = 0;
     for (i = 0; i < sizeof(entidad->d_name); i++)
     {
