@@ -48,7 +48,10 @@ int main(int argc, char *argv[])
     int sede = 1;
 
     //Lee la direccion colocada como argumento y busca el directorio raiz "DACE", si no lo encuentra lanza un error
-    char* directorioDACE = BuscarRaiz(comandos.directorio);
+    char* directorioDACE = malloc(32);
+    directorioDACE = BuscarRaiz(comandos.directorio);
+
+    printf("DIRECTORIO TOTAL: %s\n", directorioDACE);
     if(strcmp(directorioDACE, " ") == 0)
     {
         printf("ERROR: Directorio dado invalido, intente otra vez.");
@@ -62,9 +65,9 @@ int main(int argc, char *argv[])
     int p    = 1;
     do
     {
-        ArmarDireccion(p, direccion, comandos.pacienteCero);
+        ArmarDireccion(p, directorioDACE, comandos.pacienteCero);
         printf("El nuevo directorio es %s\n", direccion);
-        existe = LeerCarnet(direccion, ListaMaterias, tipo);
+        existe = LeerCarnet(directorioDACE, ListaMaterias, tipo);
         p++;
         if (p > 2)
             break;
@@ -220,7 +223,7 @@ int Opciones(int argc, char *argv[], Entradas *input)
         }
         if (dRevisada == 1)
         {
-            strcpy(input->directorio, "./DACE");
+            strcpy(input->directorio, ".");
         }
     }
     return 0;

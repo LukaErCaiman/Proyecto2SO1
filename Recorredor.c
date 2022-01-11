@@ -21,7 +21,6 @@ char* BuscarRaiz(char* directorio)
     //Si existe
     struct dirent* entidad;
     entidad = readdir(dir);
-
     //recorre el directorio para haya el directorio raiz
     while(entidad != NULL)
     {
@@ -32,10 +31,11 @@ char* BuscarRaiz(char* directorio)
             if(strcmp("DACE", entidad->d_name) == 0)
             {
                 //Guarda su direccion y la retorna
-                char* path;
+                char* path = malloc(32);
                 strcpy(path, directorio);
                 strcat(path, "/");
                 strcat(path, entidad->d_name);
+                printf("path: %s\n", path);
                 return path;
             }
         }
