@@ -6,43 +6,44 @@
 
 int VerificarMateria(int seccion, char* codigo, struct dirent* entidad);
 
-int RecorrerRaiz(char* directorio)
+char* BuscarRaiz(char* directorio)
 {
+    //funcion de dirent para recorrer directorio
     DIR* dir = opendir(directorio);
-    char SHayado = 1, LHayado = 1;
+    char Hayado = 1;
+
+    //Si el directorio no existe, retorna 0 para lanzar error
     if (dir == NULL)
     {
-        return 1;
+        return " ";
     }
 
+    //Si existe
     struct dirent* entidad;
     entidad = readdir(dir);
+
+    //recorre el directorio para haya el directorio raiz
     while(entidad != NULL)
     {
-        printf("%s\n", entidad->d_name);
+        //Si el directorio es una carpeta
         if(entidad->d_type == 4)
         {
-            if(strcmp("Sartenejas", entidad->d_name) == 0)
+            //Y esta tiene como nombre "DACE"
+            if(strcmp("DACE", entidad->d_name) == 0)
             {
-                SHayado = 0;
-            }
-            if(strcmp("Litoral", entidad->d_name) == 0)
-            {
-                LHayado = 0;
+                //Guarda su direccion y la retorna
+                char* path;
+                strcpy(path, directorio);
+                strcat(path, "/");
+                strcat(path, entidad->d_name);
+                return path;
             }
         }
         entidad = readdir(dir);
     }
-    
-    closedir(dir);
-    if(SHayado == 0 && LHayado == 0)
-    {
-        return 0;
-    }
-    else
-    {
-        return 1;
-    }
+    //Si no lo haya, lanza mensaje de error y sale del programa.
+    printf("ERROR: Carpeta DACE no encontrada en este directorio.\n");
+    exit(1);
 }
 
 
@@ -91,18 +92,22 @@ int BuscaMateria(char* codigo, char* pathSede, int seccion, struct dirent* entid
     entidad = readdir(dirRaizCodigos);
     char dosLetras[3] = { codigo[0], codigo [1], 0};
     DIR* materias;
-    char* pathCodigos = malloc(64);
     //BUSCA CARPETA DONDE ESTÁ ESTA MATERIA
     while(entidad != NULL)
     {
-        printf("ENTRA AQUI: %s---------\n", entidad->d_name);
+        printf("ENTRA AQUI: %s--------- con %s y %s\n", entidad->d_name, dosLetras, entidad->d_name);
+        printf("Y SU RESULTADO ES %d\n", strcmp(dosLetras,entidad->d_name));
+
         //SI HAYA CARPETA, ENTRA
         if(strcmp(dosLetras,entidad->d_name) == 0)
         {
+            char* pathCodigos = malloc(64);
+            printf("Entra aqui!");
             strcpy(pathCodigos,pathSede);
             strcat(pathCodigos, "/");
             strcat(pathCodigos, entidad->d_name);
-
+            char* temp;
+            scanf("%s\n", temp);
             materias = opendir(pathCodigos);
             entidad = readdir(materias);
             //BUSCA ARCHIVO DEL CARNET
@@ -118,6 +123,7 @@ int BuscaMateria(char* codigo, char* pathSede, int seccion, struct dirent* entid
             }
         }
         entidad = readdir(dirRaizCodigos);
+        printf("SALE.--");
     }
 }
 
@@ -132,11 +138,10 @@ int BuscaArchivos(char* carnetOCodigo, int seccion, int modoCoM, char* directori
 
     struct dirent* entidad;
     entidad = readdir(raiz);
-
+    DIR* sede;
     //ENTRA A CARPETA RAIZ Y BUSCA LAS CARPETAS DE LAS DOS SEDES
     while (entidad != NULL)
     {
-        DIR* sede;
         //Si haya las sedes, verifica cada una de ellas
         if(strcmp(entidad->d_name, "Sartenejas") == 0 || strcmp(entidad->d_name, "Litoral") == 0)
         {
@@ -159,30 +164,22 @@ int BuscaArchivos(char* carnetOCodigo, int seccion, int modoCoM, char* directori
             //Se cierra para abrirse después con la otra sede o cerrar la busqueda
             closedir(sede);
         } 
-
         entidad = readdir(raiz);
     }
-
-    closedir(raiz);
     return 0;
 }
 
 
 int VerificarMateria(int seccion, char* codigo, struct dirent* entidad)
 {
-    printf("%s\n", codigo);
     char* materiaLeida = malloc(8);
     int i;
-    printf("%s\n", entidad->d_name);
     char espacios = 0;
     for (i = 0; i < sizeof(entidad->d_name); i++)
     {
         if (entidad->d_name[i] == ' ')
         {
             espacios++;
-            char* temp;
-            printf("++++++%s + %s = %d\n", codigo, materiaLeida, strcmp(codigo, materiaLeida));
-            scanf("%s\n", temp);
             if(strcmp(codigo,materiaLeida) != 0)
             {
                 return 1;
@@ -229,11 +226,15 @@ void mandarListaBuscar(LMat *Lista, LEst *Lista2, char direccion[]){
 }
 
 
-
 /*
 int main(int argc, char* argv[])
 {
-    BuscaArchivos("TI4523", 1, "./DACE" );
+    char* aux;
+    aux = BuscarRaiz(".");
+
+    char path[64];
+    strcpy(path,aux);
+    printf("%s\n", path);
+
     return 0;
-<<<<<<< HEAD
-}*/
+} */
