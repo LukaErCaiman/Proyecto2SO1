@@ -282,10 +282,13 @@ void imprimirLFinal(LFinal *Lista){
 	LEst* aux2;
 
 	aux = Lista;
-	
+	int tipo_actual = 0;
 	while (aux !=NULL){
 	//printf("%s\n", aux->nombre);
-	printf("Contactar en %da instancia:\n", aux->tipo);
+	if(tipo_actual!=aux->tipo){
+		printf("Contactar en %da instancia:\n", aux->tipo);
+		tipo_actual = aux->tipo;
+	}
 	printf("%s sec %d\n", aux->codigo, aux->seccion);
 	printf("prof: %s \n", aux->profesor);
 	aux2 = aux->estudiantes;
