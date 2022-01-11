@@ -44,8 +44,15 @@ int main(int argc, char *argv[])
 
     // guarda el paciente cero en la estructura
     strcpy(comandos.pacienteCero, argv[1]);
-
     Opciones(argc, argv, &comandos);
+
+    //Lee la direccion colocada como argumento y busca el directorio raiz "DACE", si no lo encuentra lanza un error
+    char* directorioDACE = BuscarRaiz(comandos.directorio);
+    if(strcmp(directorioDACE, " ") == 0)
+    {
+        printf("ERROR: Directorio dado invalido, intente otra vez.");
+        exit(1);
+    }
 
     int existe = 0;
     char direccion[100] = "";

@@ -8,21 +8,30 @@ int VerificarMateria(int seccion, char* codigo, struct dirent* entidad);
 
 char* BuscarRaiz(char* directorio)
 {
+    //funcion de dirent para recorrer directorio
     DIR* dir = opendir(directorio);
     char Hayado = 1;
+
+    //Si el directorio no existe, retorna 0 para lanzar error
     if (dir == NULL)
     {
-        return 0;
+        return " ";
     }
 
+    //Si existe
     struct dirent* entidad;
     entidad = readdir(dir);
+
+    //recorre el directorio para haya el directorio raiz
     while(entidad != NULL)
     {
+        //Si el directorio es una carpeta
         if(entidad->d_type == 4)
         {
+            //Y esta tiene como nombre "DACE"
             if(strcmp("DACE", entidad->d_name) == 0)
             {
+                //Guarda su direccion y la retorna
                 char* path;
                 strcpy(path, directorio);
                 strcat(path, "/");
@@ -32,6 +41,7 @@ char* BuscarRaiz(char* directorio)
         }
         entidad = readdir(dir);
     }
+    //Si no lo haya, lanza mensaje de error y sale del programa.
     printf("ERROR: Carpeta DACE no encontrada en este directorio.\n");
     exit(1);
 }
