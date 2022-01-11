@@ -66,7 +66,7 @@ int compararCarnet(LEst *L, char carnet[]);
 
 int charAEntero(char caracter);
 
-int BuscaArchivos(char* carnetOCodigo, int seccion, char modoCoM, char* directorio, LEst* ListaEst, LMat* ListaMats);
+int BuscaArchivos(char* carnetOCodigo, int seccion, int modoCoM, char* directorio, LEst* ListaEst, LMat* ListaMats);
 
 
 
