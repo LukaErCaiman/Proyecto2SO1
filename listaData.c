@@ -120,7 +120,7 @@ LMat *agregarLMat(LMat *Lista, int seccion, char codigo[]){
 			nuevoLMat->codigo[h]=codigo[p];
 			h++;
 		}
-
+	}
 	printf("\n");
 	//strcpy(nuevoLMat->codigo,codigo);
 
