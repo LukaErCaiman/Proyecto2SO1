@@ -72,11 +72,6 @@ int main(int argc, char *argv[])
     } */
 
 
-<<<<<<< HEAD
-=======
-        //imprimirLMat2(ListaMaterias);
-
->>>>>>> d4df3811c18f101e94b7a994f236b68eadc5643f
     //mandarListaBuscar(ListaMaterias, ListaEstudiantes, direccion);
 
     

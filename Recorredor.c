@@ -89,7 +89,7 @@ int BuscaMateria(char* codigo, char* pathSede, int seccion, struct dirent* entid
 {
     DIR* dirRaizCodigos = opendir(strcat(pathSede, "/listas"));
     entidad = readdir(dirRaizCodigos);
-    char dosLetras[3] = { codigo[0], codigo [2], 0};
+    char dosLetras[3] = { codigo[0], codigo [1], 0};
     DIR* materias;
     char* pathCodigos = malloc(64);
     //BUSCA CARPETA DONDE ESTÁ ESTA MATERIA
@@ -180,6 +180,9 @@ int VerificarMateria(int seccion, char* codigo, struct dirent* entidad)
         if (entidad->d_name[i] == ' ')
         {
             espacios++;
+            char* temp;
+            printf("++++++%s + %s = %d\n", codigo, materiaLeida, strcmp(codigo, materiaLeida));
+            scanf("%s\n", temp);
             if(strcmp(codigo,materiaLeida) != 0)
             {
                 return 1;

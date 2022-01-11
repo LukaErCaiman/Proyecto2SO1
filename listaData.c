@@ -114,7 +114,8 @@ LMat *agregarLMat(LMat *Lista, int seccion, char codigo[]){
 	nuevoLMat->sig           = NULL;
 	nuevoLMat->seccion          = seccion;
 	int h = 0;
-	for(int p = 0; p<11 ; p++){
+	int p;
+	for(p = 0; p<11 ; p++){
 		if(p%2==0){
 			nuevoLMat->codigo[h]=codigo[p];
 			h++;
@@ -144,11 +145,11 @@ LMat *agregarLMat(LMat *Lista, int seccion, char codigo[]){
 	//identificar_LEst(Lista);
 
 	return Lista;
-
 }
 
 LEst *agregarLEst(LEst *Lista, int tipo, char cadena[]){
-	LEst *nuevoLEst, *aux;
+	LEst *nuevoLEst;
+	LEst *aux;
 	nuevoLEst                = (LEst*) malloc (sizeof (LEst));
 	//nuevoLEst->nombre        = nombre;
 	nuevoLEst->sig           = NULL;
@@ -176,7 +177,6 @@ LEst *agregarLEst(LEst *Lista, int tipo, char cadena[]){
 	identificar_LEst(Lista);
 
 	return Lista;
-
 }
 
 
