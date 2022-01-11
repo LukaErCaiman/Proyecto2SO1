@@ -113,8 +113,12 @@ LMat *agregarLMat(LMat *Lista, int seccion, char codigo[]){
 	//nuevoLEst->nombre        = nombre;
 	nuevoLMat->sig           = NULL;
 	nuevoLMat->seccion          = seccion;
+	int h = 0;
 	for(int p = 0; p<11 ; p++){
-		nuevoLMat->codigo[p]=codigo[p];
+		if(p%2==0){
+			nuevoLMat->codigo[h]=codigo[p];
+			h++;
+		}
 	}
 	printf("\n");
 	//strcpy(nuevoLMat->codigo,codigo);
@@ -248,6 +252,24 @@ void imprimirLMat(LMat *Lista){
 		aux = aux->sig;
 	}
 }
+
+void imprimirLMatPorPasos(LMat *Lista){
+	LMat* aux;
+	aux = Lista;
+	int i;
+	printf("La lista es la siguiente\n");
+	while (aux !=NULL){
+		for(i = 0;i<11;i++){
+			//if(i%2==0)
+				printf("%c", aux->codigo[i]);
+		}
+		printf("\n");
+		
+		//printf("seccion:%d \n", aux->seccion);
+		aux = aux->sig;
+	}
+}
+
 
 
 

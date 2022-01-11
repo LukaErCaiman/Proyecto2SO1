@@ -76,12 +76,8 @@ int main(int argc, char *argv[])
         imprimirLMat(ListaMaterias);
     }
 
-        
-        //imprimirLMat2(ListaMaterias);
 
-        //imprimirLMat2(ListaMaterias);
-
-    mandarListaBuscar(ListaMaterias, ListaEstudiantes, direccion);
+    //mandarListaBuscar(ListaMaterias, ListaEstudiantes, direccion);
 
     /*
     LMat* LMatIterada = ListaMaterias;

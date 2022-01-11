@@ -58,6 +58,8 @@ void imprimirEstudiantesMateria(LEst *Lista);
 
 void imprimirLMat(LMat *Lista);
 
+void imprimirLMatPorPasos(LMat *Lista);
+
 void imprimir_LEst(LEst *Lista);
 
 int compararCarnet(LEst *L, char carnet[]);
