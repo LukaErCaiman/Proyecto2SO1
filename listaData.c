@@ -32,7 +32,7 @@ typedef struct materia_compleja{
 	char profesor[30];
     int sede;
     int seccion;
-    int instancia;
+    int tipo;
     int identificador;
     char nombre[100];
     char codigo[6];
@@ -43,7 +43,10 @@ typedef struct materia_compleja{
 LFinal  *ListaMateriasCompleja  = NULL;
 
 
-////////////////
+char enteroAChar(int numero){
+    return numero + '0';
+}
+
 int charAEntero(char caracter){
     int entero = caracter - '0';
     return entero;  
@@ -65,12 +68,12 @@ int identificar_LEst (LEst *L){
 }
 
 
-LFinal *agregarLFinal(LFinal *Lista, char seccion, char codigo[], char profesor[]){
+LFinal *agregarLFinal(LFinal *Lista, char seccion, char codigo[], char profesor[], int tipo){
 	LFinal *nuevoLFinal, *aux;
 	nuevoLFinal               = (LFinal*) malloc (sizeof (LFinal));
 	//nuevoLEst->nombre        = nombre;
 	nuevoLFinal->sig           = NULL;
-
+	nuevoLFinal->tipo = tipo;
 	nuevoLFinal->seccion = charAEntero(seccion);
 	strcpy(nuevoLFinal->profesor , profesor);
 	strcpy(nuevoLFinal->codigo , codigo);
@@ -107,12 +110,14 @@ LFinal *agregarLFinal(LFinal *Lista, char seccion, char codigo[], char profesor[
 
 
 
-LMat *agregarLMat(LMat *Lista, int seccion, char codigo[]){
+LMat *agregarLMat(LMat *Lista, int seccion, char codigo[], int tipo){
 	LMat *nuevoLMat, *aux;
 	nuevoLMat                = (LMat*) malloc (sizeof (LMat));
 	//nuevoLEst->nombre        = nombre;
 	nuevoLMat->sig           = NULL;
-	nuevoLMat->seccion          = seccion;
+	nuevoLMat->seccion       = seccion;
+	nuevoLMat->tipo          = tipo;
+
 	int h = 0;
 	int p;
 	for(p = 0; p<11 ; p++){
@@ -253,6 +258,7 @@ void imprimirLMat(LMat *Lista){
 	}
 }
 
+
 void imprimirLMatPorPasos(LMat *Lista){
 	LMat* aux;
 	aux = Lista;
@@ -271,22 +277,20 @@ void imprimirLMatPorPasos(LMat *Lista){
 }
 
 
-
-
 void imprimirLFinal(LFinal *Lista){
 	LFinal* aux;
 	LEst* aux2;
 
 	aux = Lista;
-	printf("La lista es la siguiente\n");
+	
 	while (aux !=NULL){
 	//printf("%s\n", aux->nombre);
-	printf("profesor:%s \n", aux->profesor);
-	printf("codigo:%s \n", aux->codigo);
-	printf("seccion:%d \n", aux->seccion);
+	printf("Contactar en %da instancia:\n", aux->tipo);
+	printf("%s sec %d\n", aux->codigo, aux->seccion);
+	printf("prof: %s \n", aux->profesor);
 	aux2 = aux->estudiantes;
 	while(aux2 != NULL){
-		printf("estudiante: %s\n",aux2->carnet);
+		printf("%s",aux2->carnet);
 		aux2=aux2->sig;
 	}
 
@@ -302,9 +306,6 @@ void imprimir_LEst(LEst *Lista){
 	//printf("%s\n", aux->nombre);
 	printf("ID: %i ", aux->identificador);
 	printf("Carnet: %s\n", aux->carnet);
-
-
-
 
 	aux =aux->sig;
 	}
@@ -328,6 +329,18 @@ int compararCarnet(LEst *L, char carnet[]){
 	{
 		if(strcmp(L->carnet,carnet)==0){
 			printf("El numero de carnet ya existe\n");
+			return 0;
+		}
+		L=L->sig;
+	}
+	return 1;
+}
+
+int compararCodigo(LFinal *L, char codigo[]){
+	while(L!=NULL)
+	{
+		if(strcmp(L->codigo,codigo)==0){
+			printf("El codigo de materia ya existe\n");
 			return 0;
 		}
 		L=L->sig;

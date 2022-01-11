@@ -21,28 +21,25 @@ void imprimirLMat2(LMat *Lista){
 }
 
 
-void pasarCadena2(LEst *Lista , LFinal *L, char cadena1[]){
+void pasarCadena2(LEst *Lista , LFinal *L, char cadena1[], int tipo){
 
-    ListaEstudiantes = agregarLEst(ListaEstudiantes,1, cadena1);
+    if(compararCarnet(ListaEstudiantes, cadena1)){
+        ListaEstudiantes = agregarLEst(ListaEstudiantes,tipo, cadena1);
+    }else{
+        //si no es nuevo, no se.. creo que se agrega, no se xd
+        printf("El carnet ya existe, no se agrego\n"); 
+    }
+    //ahora tengo que ver si ya esta en la lista o tengo que agregarlo.. 
     LFinal* aux;
     aux = L;
     while (aux->sig !=NULL){
         aux =aux->sig;
     }
-    aux->estudiantes   = agregarLEst(aux->estudiantes,1,  cadena1); 
-
-
-    ///printf("La Cadena es: %s",cadena1);
-    /*if(compararCarnet(Lista, cadena1)){
-
-    }else{
-        //si no es nuevo, no se.. creo que se agrega, no se xd 
-    }*/
-    //ahora tengo que ver si ya esta en la lista o tengo que agregarlo.. 
-
+    aux->estudiantes   = agregarLEst(aux->estudiantes,tipo, cadena1); 
+    
 } 
 
-int LeerCarnet(char* directorio, LMat *Lista)
+int LeerCarnet(char* directorio, LMat *Lista, int tipo)
 {
     FILE* archivo = fopen(directorio, "r");
     
@@ -124,6 +121,9 @@ int LeerCarnet(char* directorio, LMat *Lista)
             strcpy(codiguito,codigo);
             ListaMaterias = agregarLMat(ListaMaterias,charAEntero(seccion), codiguito);
 
+            
+            
+
         }
 
 
@@ -134,12 +134,12 @@ int LeerCarnet(char* directorio, LMat *Lista)
     return 1;
 }
 
-int LeerCurso(char* directorio,  LMat *Lista)
+int LeerCurso(char* directorio,  LMat *Lista, int tipo)
 {
     FILE* archivo = fopen(directorio, "r");
     printf("ENTRA AQUI\n");
-    char* temp;
-    scanf("%s\n",temp);
+    //char* temp;
+    //scanf("%s\n",temp);
     
     //Mensaje de error si no hay un archivo con el directorio dado
     if (archivo == NULL)
@@ -234,12 +234,7 @@ int LeerCurso(char* directorio,  LMat *Lista)
                 }
             }
             //ListaMateriasCompleja = agregarLFinal(ListaMateriasCompleja, 1);
-            ListaMateriasCompleja = agregarLFinal(ListaMateriasCompleja, seccion, codigo, profesor);
-            ListaMateriasCompleja = agregarLFinal(ListaMateriasCompleja, '2', "aux324", "ernesto guadarrama");
-            ListaMateriasCompleja = agregarLFinal(ListaMateriasCompleja, '3', "ass334", "jose bermudez");
-
-
-
+            ListaMateriasCompleja = agregarLFinal(ListaMateriasCompleja, seccion, codigo, profesor, tipo);
             //seccion, codigo, profesor, 
             //si se sale del bucle anterior, significa que leyo toda la linea
             //activa un flag para leer las demas lineas
@@ -248,10 +243,73 @@ int LeerCurso(char* directorio,  LMat *Lista)
         else
         {
             printf("Carnet: %s", linea);
-            pasarCadena2(ListaEstudiantes, ListaMateriasCompleja, linea);
+            pasarCadena2(ListaEstudiantes, ListaMateriasCompleja, linea, tipo);
         }
     }
 
     return 0;
+}
+
+
+
+void ArmarDireccionCurso(int tipo, char direccion[], char curso[], int seccion, char direccion_final[]){
+    char directorio2[100];
+    char cohorte[3];
+    char inicial[2];
+
+    strcpy(directorio2, direccion);
+    printf("curso en funcion direccion %s\n", curso );
+
+    for(int p = 0; p<2 ; p++){
+        inicial[p]=curso[p];
+    }
+    inicial[2] = '\0';
+    
+    //strncpy(inicial, curso, 2);
+    printf("Las iniciales del curso son: %s\n", inicial);
+    switch(tipo){
+        case 1:
+            strcat(directorio2,"DACE/Sartenejas/listas/");
+            break;
+        case 2:
+            strcpy(directorio2,"DACE/Litoral/listas/");
+            break;
+        default:
+            strcpy(directorio2,"DACE/Sartenejas/comprobantes/listas/");
+
+    }
+    strncat(directorio2, inicial, 2);
+    strcat(directorio2, "/");
+    strcat(directorio2, curso);
+    strcat(directorio2, " seccion ");
+    char cToStr[2];
+    cToStr[1] = '\0';
+    cToStr[0] =  enteroAChar(seccion);
+    //sprintf(directorio2, "%s%c", directorio2, enteroAChar(seccion));
+    strcat(directorio2, cToStr );
+
+    strcat(directorio2, ".txt");
+    strcpy(direccion_final, directorio2);
+}
+
+void recorrerLMatAbrirCursos(LMat *Lista, char direccion_inicial[], int sede, int tipo){
+    LMat* aux;
+    aux = Lista;
+    char direccion[100];
+    while (aux != NULL){
+        ArmarDireccionCurso(sede, direccion_inicial , aux->codigo, aux->seccion, direccion);
+        printf("La direccion final es %s\n", direccion);
+
+        if(compararCodigo(ListaMateriasCompleja, aux->codigo)){
+            LeerCurso(direccion,  ListaMaterias, tipo);
+            printf("%s", aux->codigo);
+            printf("seccion:%d \n", aux->seccion);
+            printf("\n");
+        }else{
+            printf("La materia no se agrego porque ya existe\n");
+        }
+        
+        aux = aux->sig;
+    }
 }
 

@@ -46,22 +46,22 @@ int main(int argc, char *argv[])
     strcpy(comandos.pacienteCero, argv[1]);
 
     Opciones(argc, argv, &comandos);
-
+    int sede = 1;
     int existe = 0;
     char direccion[100] = "";
     strcpy(direccion, comandos.directorio);
-
-    int sede = 1;
+    int tipo = 0;
+    int p    = 1;
     do
     {
-        ArmarDireccion(sede, direccion, comandos.pacienteCero);
-        //printf("El nuevo directorio es %s\n", direccion);
-        existe = LeerCarnet(direccion, ListaMaterias);
-        sede++;
-        if (sede > 2)
+        ArmarDireccion(p, direccion, comandos.pacienteCero);
+        printf("El nuevo directorio es %s\n", direccion);
+        existe = LeerCarnet(direccion, ListaMaterias, tipo);
+        p++;
+        if (p > 2)
             break;
     } while (existe == 0);
-    /*
+    
     if (!existe)
     {
         printf("No existe el comprobante de este estudiante.\n");
@@ -69,12 +69,26 @@ int main(int argc, char *argv[])
     else
     {
         imprimirLMat(ListaMaterias);
-    } */
+    } 
 
+    char direccionMaterias[100] = "";
+    tipo++;
+    recorrerLMatAbrirCursos(ListaMaterias, direccionMaterias , sede, tipo);
+
+
+    printf("Ahora deberiamos tener que ver la lsita de materias completa con estudantes y todo\n");
+    imprimirLFinal(ListaMateriasCompleja);
+
+
+    printf("\n");
+    printf("\n");
+    printf("\n");
+    printf("Ahora imprimimos la lista de todos los estudiantes enfermos sin repetir\n");
+    imprimir_LEst(ListaEstudiantes);
 
     //mandarListaBuscar(ListaMaterias, ListaEstudiantes, direccion);
 
-    
+    /*
     LMat* LMatIterada = ListaMaterias;
     LEst* LEstIterada = malloc(sizeof(LEst*));
     printf("------DIRECCION: %s\n", comandos.directorio);
@@ -85,7 +99,7 @@ int main(int argc, char *argv[])
 
         BuscaArchivos(LMatIterada->codigo, LMatIterada->seccion, 1, comandos.directorio, LEstIterada, LMatIterada);
         LMatIterada = LMatIterada->sig;
-    }
+    }*/
 
 
 
