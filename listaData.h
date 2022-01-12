@@ -4,6 +4,7 @@
 typedef struct nodo{
     char carnet[100];
     int tipo;
+    int identificador;
     struct nodo *sig;
 }LEst;
 
@@ -71,10 +72,6 @@ int charAEntero(char caracter);
 char enteroAChar(int numero);
 
 int BuscaArchivos(char* carnetOCodigo, int seccion, int modoCoM, char* directorio, LEst* ListaEst, LMat* ListaMats);
-
-
-
-
 
 
 #endif

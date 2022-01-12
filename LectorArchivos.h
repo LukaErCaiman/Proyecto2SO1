@@ -12,7 +12,12 @@ void imprimirLMat2(LMat *Lista);
 
 void ArmarDireccionCurso(int tipo, char direccion[], char curso[], int seccion, char direccion_final[]);
 
+void ArmarDireccion(int tipo, char direccion[], char carnet[]);
+
 void recorrerLMatAbrirCursos(LMat *Lista, char direccion_inicial[], int sede, int tipo);
+
+void recorrerLEstAbrirComprobantes(LEst *ListaEst, LMat *ListaMat, char directorioDACE[], int sede, int tipo);
+
 
 
 
