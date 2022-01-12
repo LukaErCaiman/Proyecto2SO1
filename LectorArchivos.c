@@ -26,10 +26,9 @@ void pasarCadena2(LEst *Lista , LFinal *L, char cadena1[], int tipo){
     if(compararCarnet(ListaEstudiantes, cadena1)){
         ListaEstudiantes = agregarLEst(ListaEstudiantes,tipo, cadena1);
     }else{
-        //si no es nuevo, no se.. creo que se agrega, no se xd
-        printf("El carnet ya existe, no se agrego\n"); 
+        //si no es nuevo, no se agrega
+        //printf("El carnet ya existe, no se agrego\n"); 
     }
-    //ahora tengo que ver si ya esta en la lista o tengo que agregarlo.. 
     LFinal* aux;
     aux = L;
     while (aux->sig !=NULL){
@@ -68,7 +67,7 @@ int LeerCarnet(char* directorio, LMat *Lista, int tipo)
         //Si no se ha leido la promera linea
         if(primeraLineaLeida == 0)
         {
-            printf("Carnet: %s", linea);
+            //printf("Carnet: %s", linea);
             primeraLineaLeida = 1;
         }
         else
@@ -137,7 +136,6 @@ int LeerCarnet(char* directorio, LMat *Lista, int tipo)
 int LeerCurso(char* directorio,  LMat *Lista, int tipo)
 {
     FILE* archivo = fopen(directorio, "r");
-    printf("ENTRA AQUI\n");
     //char* temp;
     //scanf("%s\n",temp);
     
@@ -187,7 +185,7 @@ int LeerCurso(char* directorio,  LMat *Lista, int tipo)
                     if(espacio == 1)
                     {
                         seccion = linea[i+1];
-                        printf("Seccion: %c\n", seccion);
+                        //printf("Seccion: %c\n", seccion);
                         espacio++;
                     }
 
@@ -198,7 +196,7 @@ int LeerCurso(char* directorio,  LMat *Lista, int tipo)
                         espacio++;
                         if (espacio == 1)
                         {
-                            printf("Codigo: %s\n", codigo);
+                           // printf("Codigo: %s\n", codigo);
                         }
                     }
                 }
@@ -227,7 +225,7 @@ int LeerCurso(char* directorio,  LMat *Lista, int tipo)
                     //Si llega a un guion, imprime el nombre del profesor
                     if(linea[i] == '-')
                     {
-                        printf("Profesor: %s\n", profesor);
+                        //printf("Profesor: %s\n", profesor);
                         break;
                     }
                     
@@ -242,7 +240,7 @@ int LeerCurso(char* directorio,  LMat *Lista, int tipo)
         }
         else
         {
-            printf("Carnet: %s", linea);
+            //printf("Carnet: %s", linea);
             pasarCadena2(ListaEstudiantes, ListaMateriasCompleja, linea, tipo);
         }
     }
@@ -258,7 +256,7 @@ void ArmarDireccionCurso(int tipo, char direccion[], char curso[], int seccion, 
     char inicial[2];
 
     strcpy(directorio2, direccion);
-    printf("curso en funcion direccion %s\n", curso );
+    //printf("curso en funcion direccion %s\n", curso );
 
     for(int p = 0; p<2 ; p++){
         inicial[p]=curso[p];
@@ -266,7 +264,7 @@ void ArmarDireccionCurso(int tipo, char direccion[], char curso[], int seccion, 
     inicial[2] = '\0';
     
     //strncpy(inicial, curso, 2);
-    printf("Las iniciales del curso son: %s\n", inicial);
+    //printf("Las iniciales del curso son: %s\n", inicial);
     switch(tipo){
         case 1:
             strcat(directorio2,"DACE/Sartenejas/listas/");
@@ -296,20 +294,79 @@ void recorrerLMatAbrirCursos(LMat *Lista, char direccion_inicial[], int sede, in
     LMat* aux;
     aux = Lista;
     char direccion[100];
+
     while (aux != NULL){
         ArmarDireccionCurso(sede, direccion_inicial , aux->codigo, aux->seccion, direccion);
-        printf("La direccion final es %s\n", direccion);
+        //printf("La direccion final es %s\n", direccion);
 
         if(compararCodigo(ListaMateriasCompleja, aux->codigo)){
             LeerCurso(direccion,  ListaMaterias, tipo);
-            printf("%s", aux->codigo);
-            printf("seccion:%d \n", aux->seccion);
-            printf("\n");
         }else{
-            printf("La materia no se agrego porque ya existe\n");
+            //printf("La materia no se agrego porque ya existe\n");
         }
         
         aux = aux->sig;
+    }
+}
+void ArmarDireccion(int tipo, char direccion[], char carnet[])
+{
+    char directorio2[100];
+    char cohorte[3];
+
+    switch(tipo){
+        case 1:
+            strcat(direccion,"/Sartenejas/comprobantes/");
+            break;
+        case 2:
+            strcpy(direccion,"/Litoral/comprobantes/");
+            break;
+        default:
+            strcpy(direccion,"/Sartenejas/comprobantes/");
+
+    }
+    strncpy(cohorte, carnet, 2);
+    strncat(direccion, cohorte, 2);
+    strcat(direccion, "/");
+    strcat(direccion, carnet);
+    strcat(direccion, ".txt");
+}
+
+void recorrerLEstAbrirComprobantes(LEst *ListaEst, LMat *ListaMat, char directorioDACE[], int sede, int tipo){
+    //printf("La direccion es %s\n", directorioDACE );
+    LEst* auxiliar;
+    auxiliar = ListaEst;
+    int p;
+    int existe = 0;
+    int numero_estudiantes = identificar_LEst(auxiliar);
+    int iteraciones = 0;
+    char direccion_auxiliar[100];
+    strcpy(direccion_auxiliar, directorioDACE);
+    while (numero_estudiantes!=iteraciones){   
+
+        if(auxiliar->tipo != tipo){
+            auxiliar = auxiliar->sig;
+            iteraciones++;
+            continue;
+        } 
+        p = 1;
+        do{
+            ArmarDireccion(p, direccion_auxiliar, auxiliar->carnet);
+            //printf("El nuevo directorio es %s\n", direccion_auxiliar);
+            existe = LeerCarnet(direccion_auxiliar, ListaMaterias, tipo);
+            p++;
+            if (p > 2)break;
+        }while (existe == 0);
+        
+        if (!existe){
+            printf("No existe el comprobante de este estudiante.\n");
+        }
+        else{
+            //imprimirLMat(ListaMaterias);
+        } 
+
+        auxiliar =auxiliar->sig;
+        iteraciones++;
+
     }
 }
 

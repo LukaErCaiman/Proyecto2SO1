@@ -10,7 +10,6 @@ typedef struct nodo{
     int tipo;
     int identificador;
     struct nodo *sig;
-    struct materia *materias;
 }LEst;
 
 typedef struct materia{
@@ -66,6 +65,8 @@ int identificar_LEst (LEst *L){
 	}
 	return i;
 }
+
+
 
 
 LFinal *agregarLFinal(LFinal *Lista, char seccion, char codigo[], char profesor[], int tipo){
@@ -159,7 +160,7 @@ LEst *agregarLEst(LEst *Lista, int tipo, char cadena[]){
 	//nuevoLEst->nombre        = nombre;
 	nuevoLEst->sig           = NULL;
 	nuevoLEst->tipo          = tipo;
-	strcpy(nuevoLEst->carnet,cadena);
+	strncpy(nuevoLEst->carnet,cadena, 7);
 
 
 	if (Lista==NULL){
@@ -293,7 +294,7 @@ void imprimirLFinal(LFinal *Lista){
 	printf("prof: %s \n", aux->profesor);
 	aux2 = aux->estudiantes;
 	while(aux2 != NULL){
-		printf("%s",aux2->carnet);
+		printf("%s\n",aux2->carnet);
 		aux2=aux2->sig;
 	}
 
@@ -308,7 +309,9 @@ void imprimir_LEst(LEst *Lista){
 	while (aux !=NULL){
 	//printf("%s\n", aux->nombre);
 	printf("ID: %i ", aux->identificador);
-	printf("Carnet: %s\n", aux->carnet);
+	printf("Carnet: %s ", aux->carnet);
+	printf("Instancia: %d\n", aux->tipo);
+
 
 	aux =aux->sig;
 	}
@@ -328,10 +331,12 @@ void imprimirEstudiantesMateria(LEst *Lista){
 
 int compararCarnet(LEst *L, char carnet[]){
 	int i=0;
+	char carnet_auxiliar[7];
+	strncpy(carnet_auxiliar, carnet, 7);
 	while(L!=NULL)
 	{
-		if(strcmp(L->carnet,carnet)==0){
-			printf("El numero de carnet ya existe\n");
+		if(strcmp(L->carnet,carnet_auxiliar)==0){
+			//printf("El numero de carnet ya existe\n");
 			return 0;
 		}
 		L=L->sig;
@@ -343,7 +348,7 @@ int compararCodigo(LFinal *L, char codigo[]){
 	while(L!=NULL)
 	{
 		if(strcmp(L->codigo,codigo)==0){
-			printf("El codigo de materia ya existe\n");
+			//printf("El codigo de materia ya existe\n");
 			return 0;
 		}
 		L=L->sig;

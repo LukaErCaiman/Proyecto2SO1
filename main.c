@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
     char* directorioDACE = malloc(32);
     directorioDACE = BuscarRaiz(comandos.directorio);
 
-    printf("DIRECTORIO TOTAL: %s\n", directorioDACE);
+    //printf("DIRECTORIO TOTAL: %s\n", directorioDACE);
     if(strcmp(directorioDACE, " ") == 0)
     {
         printf("ERROR: Directorio dado invalido, intente otra vez.");
@@ -62,119 +62,40 @@ int main(int argc, char *argv[])
     int existe = 0;
     char direccion[100] = "";
     strcpy(direccion, comandos.directorio);
+    printf("La instancia es %d\n",comandos.instancias );
+    int tipomaximo = comandos.instancias;
     int tipo = 0;
-    int p    = 1;
-    do
-    {
-        ArmarDireccion(p, directorioDACE, comandos.pacienteCero);
-        printf("El nuevo directorio es %s\n", direccion);
-        existe = LeerCarnet(directorioDACE, ListaMaterias, tipo);
-        p++;
-        if (p > 2)
-            break;
-    } while (existe == 0);
-    
-    if (!existe)
-    {
-        printf("No existe el comprobante de este estudiante.\n");
-    }
-    else
-    {
-        imprimirLMat(ListaMaterias);
-    } 
 
+
+    ListaEstudiantes = agregarLEst(ListaEstudiantes, 0, comandos.pacienteCero);
+    
     char direccionMaterias[100] = "";
-    tipo++;
-    recorrerLMatAbrirCursos(ListaMaterias, direccionMaterias , sede, tipo);
+    while(tipo!=tipomaximo){
+
+        recorrerLEstAbrirComprobantes(ListaEstudiantes, ListaMaterias, directorioDACE, sede, tipo);
+        strcpy(direccionMaterias,"");
+        tipo++;
+        recorrerLMatAbrirCursos(ListaMaterias, direccionMaterias , sede, tipo);
+    }
+    
 
 
-    printf("Ahora deberiamos tener que ver la lsita de materias completa con estudantes y todo\n");
+    printf("La salida del programa es:\n");
     imprimirLFinal(ListaMateriasCompleja);
 
 
     printf("\n");
     printf("\n");
     printf("\n");
-    printf("Ahora imprimimos la lista de todos los estudiantes enfermos sin repetir\n");
+    printf("Finalmente tenemos la lista de los estudiantes a contactar y su instancia\n");
     imprimir_LEst(ListaEstudiantes);
 
-    //mandarListaBuscar(ListaMaterias, ListaEstudiantes, direccion);
-
-    /*
-    LMat* LMatIterada = ListaMaterias;
-    LEst* LEstIterada = malloc(sizeof(LEst*));
-    printf("------DIRECCION: %s\n", comandos.directorio);
-    while(LMatIterada!= NULL)
-    {
-        printf("CODIGOOOO %s\n", LMatIterada->codigo);
-        printf(" SECCIONNNN %d\n", LMatIterada->seccion);
-
-        BuscaArchivos(LMatIterada->codigo, LMatIterada->seccion, 1, comandos.directorio, LEstIterada, LMatIterada);
-        LMatIterada = LMatIterada->sig;
-    }*/
-
-
-
-
-
-    //LeerCurso("CCG333 seccion 1.txt",ListaMaterias);
-
-
-    //Para ver si esta en sartenejas 
-    
-
-    // char *directorio = "DACE/Sartenejas/comprobantes/14/1410445.txt";
-    /*if(LeerCarnet(directorio2, ListaMaterias)){
-        printf("La lista de materias es:\n");
-    }else{
-        char directorio2[100] = "DACE/Litoral/comprobantes/";
-        strncat(directorio2, cohorte, 2);
-        strcat(directorio2, "/");
-        strcat(directorio2, comandos.pacienteCero);
-        strcat(directorio2, ".txt");
-        printf("El nuevo directorio es %s\n", directorio2);
-        existe
-
-    }*/
-    
-
-
-   /// ejecutarDirectorio(".");
-
-   /* printf("Luego de todo deberia imprimir la lista de estudiantes\n");
-    imprimir_LEst(ListaEstudiantes);
-
-    //imprimirEstudiantesMateria(ListaMateriasCompleja);
-    imprimirLFinal(ListaMateriasCompleja);
-
-    /// ejecutarDirectorio(".");
-*/
+   
     return 0;
 }
 
 
-void ArmarDireccion(int tipo, char direccion[], char carnet[])
-{
-    char directorio2[100];
-    char cohorte[3];
 
-    switch(tipo){
-        case 1:
-            strcat(direccion,"/Sartenejas/comprobantes/");
-            break;
-        case 2:
-            strcpy(direccion,"/Litoral/comprobantes/");
-            break;
-        default:
-            strcpy(direccion,"/Sartenejas/comprobantes/");
-
-    }
-    strncpy(cohorte, carnet, 2);
-    strncat(direccion, cohorte, 2);
-    strcat(direccion, "/");
-    strcat(direccion, carnet);
-    strcat(direccion, ".txt");
-}
 
 int Opciones(int argc, char *argv[], Entradas *input)
 {
