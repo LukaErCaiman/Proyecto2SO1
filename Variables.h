@@ -12,20 +12,4 @@ typedef struct Entradas
     char pacienteCero[7];
 } Entradas;
 
-/* Estructura que guarda a estudiantes y/o profesores
-    instancia - int que guarda la instancia en que se contacta a este estudiante.
-    carnet - arreglo de char que guarda el numero de carnet
-    cursos - arreglo de apuntadores de char que guarda los cursos a los que asiste
-    head, sig- ant - apuntadores de lista a la cabeza de la lista, el elemento siguiente y anterior */
-typedef struct Persona
-{
-    struct Persona* head;
-    struct Persona* sig;
-    struct Persona* ant;
-    int instancia;
-    char carnet[7];
-    char* cursos[10];
-    
-} Persona;
-
 #endif

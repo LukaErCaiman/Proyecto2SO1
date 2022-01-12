@@ -14,6 +14,6 @@ void ArmarDireccionCurso(int tipo, char direccion[], char curso[], int seccion, 
 
 void recorrerLMatAbrirCursos(LMat *Lista, char direccion_inicial[], int sede, int tipo);
 
-
+void recorrerLEstAbrirComprobantes(LEst *ListaEst, LMat *ListaMat, char directorioDACE[], int sede, int tipo);
 
 #endif

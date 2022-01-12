@@ -45,7 +45,6 @@ int LeerCarnet(char* directorio, LMat *Lista, int tipo)
     //Mensaje de error si no hay un archivo con el directorio dado
     if (archivo == NULL)
     {
-        printf("ERROR: directorio de archivo invalido!\n");
         return 0;
         exit(1);
     }
@@ -257,8 +256,8 @@ void ArmarDireccionCurso(int tipo, char direccion[], char curso[], int seccion, 
 
     strcpy(directorio2, direccion);
     //printf("curso en funcion direccion %s\n", curso );
-
-    for(int p = 0; p<2 ; p++){
+    int p;
+    for(p = 0; p<2 ; p++){
         inicial[p]=curso[p];
     }
     inicial[2] = '\0';

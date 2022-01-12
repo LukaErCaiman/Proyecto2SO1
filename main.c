@@ -62,7 +62,7 @@ int main(int argc, char *argv[])
     int existe = 0;
     char direccion[100] = "";
     strcpy(direccion, comandos.directorio);
-    printf("La instancia es %d\n",comandos.instancias );
+    //printf("La instancia es %d\n",comandos.instancias );
     int tipomaximo = comandos.instancias;
     int tipo = 0;
 
@@ -80,15 +80,15 @@ int main(int argc, char *argv[])
     
 
 
-    printf("La salida del programa es:\n");
+    //printf("La salida del programa es:\n");
     imprimirLFinal(ListaMateriasCompleja);
 
 
-    printf("\n");
-    printf("\n");
-    printf("\n");
-    printf("Finalmente tenemos la lista de los estudiantes a contactar y su instancia\n");
-    imprimir_LEst(ListaEstudiantes);
+    //printf("\n");
+    //printf("\n");
+    //printf("\n");
+    //printf("Finalmente tenemos la lista de los estudiantes a contactar y su instancia\n");
+    //imprimir_LEst(ListaEstudiantes);
 
    
     return 0;

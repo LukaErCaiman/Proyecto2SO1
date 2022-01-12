@@ -35,7 +35,6 @@ char* BuscarRaiz(char* directorio)
                 strcpy(path, directorio);
                 strcat(path, "/");
                 strcat(path, entidad->d_name);
-                printf("path: %s\n", path);
                 return path;
             }
         }
