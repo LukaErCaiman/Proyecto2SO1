@@ -18,7 +18,4 @@ void recorrerLMatAbrirCursos(LMat *Lista, char direccion_inicial[], int sede, in
 
 void recorrerLEstAbrirComprobantes(LEst *ListaEst, LMat *ListaMat, char directorioDACE[], int sede, int tipo);
 
-
-
-
 #endif
